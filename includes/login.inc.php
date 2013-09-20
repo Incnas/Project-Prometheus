@@ -14,16 +14,16 @@ if($reqauth==true && (!isset($_SESSION['authenticated']) OR $_SESSION['authentic
 }
 
 //Check if user needs to be admin but isn't
-if($reqadmin==true && (!isset($_SESSION['user_isadmin']) OR $_SESSION['user_isadmin']!=true)){
+if($reqadmin==true && (!isset($_SESSION['user']['isadmin']) OR $_SESSION['user']['isadmin']!=true)){
 	header('HTTP/1.0 403 Forbidden');
 	echo "Go away you are not allowed here!!";
 	exit;
 }
 
 //Log in to MySQL database, using mysqli 
-$mysqlusername="videonarc";
-$mysqlpassword="CPduRuWd68Pn5Zsm";
-$database="videonarc";
+$mysqlusername="prometheus";
+$mysqlpassword="v3ApJX6YEfXVXKup";
+$database="prometheus";
 
 //single most important video in the site.
 $mysqli= new mysqli('localhost', $mysqlusername, $mysqlpassword, $database);
