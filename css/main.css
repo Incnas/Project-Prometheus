@@ -1,0 +1,179 @@
+@charset "UTF-8";
+
+body {
+	 font-family:Tahoma,Geneva,sans-serif;
+	/*font-family: 'Telex', sans-serif;*/
+	margin:0;
+	padding:0;
+	color:#000;
+	background: #222222;
+}
+
+/* ~~ Element/tag selectors ~~ */
+ul,ol,dl {
+/* Due to variations between browsers, it's best practices to zero padding and margin on lists. For consistency, you can either specify the amounts you want here, or on the list items (LI, DT, DD) they contain. Remember that what you do here will cascade to the .nav list unless you write a more specific selector. */
+	padding:0;
+	margin:0
+}
+
+h1,h2,h3,h4,h5,h6,p {
+	margin-top:0;
+/* removing the top margin gets around an issue where margins can escape from their containing div. The remaining bottom margin will hold it away from any elements that follow. */
+	padding-right:15px;
+	padding-left:15px
+/* adding the padding to the sides of the elements within the divs, instead of the divs themselves, gets rid of any box model math. A nested div with side padding can also be used as an alternate method. */
+}
+
+a img {
+/* this selector removes the default blue border displayed in some browsers around an image when it is surrounded by a link */
+	border:none
+}
+
+/* ~~this fixed width container surrounds the other divs~~ */
+.container {
+	max-width:1000px;
+	margin:20px auto 10px;
+	background: #ffffff;
+}
+
+/* ~~ the header is not given a width. It will extend the full width of your layout. It contains an image placeholder that should be replaced with your own linked logo ~~ */
+.header {
+	background-color:#284c8f;
+	color:#fff;
+	font-family:Georgia,"Times New Roman",Times,serif;
+	min-height: 80px;
+	margin-bottom: 0;
+	border-bottom: solid #284c8f 6px;
+}
+
+.header a {
+	text-decoration:none;
+	color:#fff!important
+}
+
+.header img {max-height:200px; width: 100%; vertical-align:bottom;}
+.header h2 {margin-bottom: 0;}
+
+
+#menu {
+	list-style: none;
+	background: #284c8f;
+}
+
+#menu li {
+	display: inline-block;
+	padding: 5px;
+	background: #284c8f;
+	margin: 0;
+}
+
+#menu li a, #menu li a:visited  {
+	text-decoration: none;
+	color: #fff;
+}
+
+#menu li:hover {
+	background: #4072cd;
+}
+
+
+#content {
+	padding:10px 0;
+	min-height: 400px;
+}
+
+/* ~~ This grouped selector gives the lists in the .content area space ~~ */
+.content ul,.content ol {
+	padding:0 15px 15px 40px
+/* this padding mirrors the right padding in the headings and paragraph rule above. Padding was placed on the bottom for space between other elements on the lists and on the left to create the indention. These may be adjusted as you wish. */
+}
+
+a:visited {
+	color:#00F
+}
+
+/* ~~ The footer ~~ */
+.footer {
+	padding-top:15px;
+	color:#000;
+	position:relative;
+/* this gives IE6 hasLayout to properly clear */
+	clear:both;
+/* this clear property forces the .container to understand where the columns end and contain them */
+	background:no-repeat
+}
+.footer img {max-height:200px; width: 100%;}
+
+/* ~~ miscellaneous float/clear classes ~~ */
+.fltrt {
+/* this class can be used to float an element right in your page. The floated element must precede the element it should be next to on the page. */
+	float:right;
+	margin-left:8px
+}
+
+.fltlft {
+/* this class can be used to float an element left in your page. The floated element must precede the element it should be next to on the page. */
+	float:left;
+	margin-right:8px
+}
+
+.clearfloat {
+/* this class can be placed on a <br /> or empty div as the final element following the last floated div (within the #container) if the #footer is removed or taken out of the #container */
+	clear:both;
+	height:0;
+	font-size:1px;
+	line-height:0
+}
+
+.datagrid table { border-collapse: collapse; text-align: left; width: 100%; }
+.datagrid {font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff; overflow: hidden; border: 1px solid #006699; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; width: 90%; margin:10px auto; }
+.datagrid table td, .datagrid table th { padding: 10px 12px; }
+.datagrid table thead th {background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #287DDE), color-stop(1, #284C8F) ); background:-moz-linear-gradient( center top, #287DDE 5%, #284C8F 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#287DDE', endColorstr='#284C8F');background-color:#287DDE; color:#FFFFFF; font-size: 15px; font-weight: bold; }
+.datagrid table thead th:first-child { border: none; }
+.datagrid table tbody td { color: #284C8F; border-left: 1px solid #D9D9D9;font-size: 12px;font-weight: normal; }
+.datagrid table tbody tr.even td { background: #D7E6F2; color: #00557F; }
+.datagrid table tbody td:first-child { border-left: none; }
+.datagrid table tbody tr:last-child td { border-bottom: none; }
+.datagrid table tfoot td div { border-top: 1px solid #006699;background: #D7E6F2;}
+.datagrid table tfoot td { padding: 0; font-size: 10px }
+.datagrid table tfoot td div{ padding: 2px; }
+.datagrid table tbody td a {display: block; color: #284C8F;}
+
+
+
+.video {
+	display: inline-block;
+}
+
+.video img {
+	vertical-align: bottom;
+}
+
+.show_details {
+	width: 1000px;
+	height: 330px;
+}
+
+.show_details .video_cover {
+	padding:15px;
+	float: left;	
+}
+
+.show_details .video_details {
+}
+.show_details .video_details h3 {
+	padding-top: 15px;
+
+	font-size: 40px;
+}
+
+.show_details .buttons {
+	float: right;
+	margin: 30px 30px 0 0;
+}
+
+div.offset {
+	margin: 10px auto;
+	width: 200px;
+	text-align: center;
+}
