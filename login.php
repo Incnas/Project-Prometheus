@@ -30,7 +30,7 @@ if(isset($_SESSION['authenticated']) && $_SESSION['authenticated']==true){
     <div>
         <h1>PROMETHEUS</h1>
 
-        <h2>Narrabundah College Course Manager. TEST</h2>
+        <h2>Narrabundah College Course Manager.</h2>
 
         <noscript>
             <span style="color:red">
