@@ -40,8 +40,8 @@ $section_UnitGoals->addText('This unit should enable students to:', array('bold'
 
 //Load Unit Goals
 $section_UnitGoals = $PHPWord->createSection();
-$section_UnitGoals->addText('Demonstrate investigation and interpretation skills necessary to solve problems of evidence and achieve independence in researching');
-$section_UnitGoals->addText('Communicate a logically developed, articulate and focussed arguement to convey historical positions or ideas');
+$section_UnitGoals->addListItem('Demonstrate investigation and interpretation skills necessary to solve problems of evidence and achieve independence in researching', 0, null, $listBullet);
+$section_UnitGoals->addText('Communicate a logically developed, articulate and focussed arguement to convey historical positions or ideas', 0, null, $listBullet);
 
 //Create Content Section
 $section_Content = $PHPWord->createSection();
@@ -55,7 +55,14 @@ $section_Content->addListItem('Judaism and Christianity - challenges to the Roma
 $section_Content->addListItem('Constantine the Great - a State Religion?', 0, null, $listBullet);
 
 //Create Assessment Items Section
-section_AssessmentItems = $PHPWord->createSection();
+$section_AssessmentItems = $PHPWord->createSection();
+$table_Assessment = $section_AssessmentItems->addTable();
 
+//For each row add cells
+$table_Assessment->addRow();
+$cell = $table_Assessment->addCell();
+
+$objWriter = PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
+$objWriter->save('Unit Outline.docx');
 
 ?>
