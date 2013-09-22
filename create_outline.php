@@ -18,6 +18,7 @@ $paragraph_Center = array('align'=>'center');
 $PHPWord->addParagraphStyle('paragraphStyle_Center', $paragraph_Center);
 $font_Upper = array('size'=>14, 'bold'=>true);
 $PHPWord->addFontStyle('fontStyle_Upper', $font_Upper);
+$listBullet = array('listType'=>PHPWord_Style_ListItem::TYPE_BULLET_FILLED);
 
 //Every element you want to apped to the word document is placed in a section. So you need a section:
 $section_Title = $PHPWord->createSection();
@@ -39,7 +40,22 @@ $section_UnitGoals->addText('This unit should enable students to:', array('bold'
 
 //Load Unit Goals
 $section_UnitGoals = $PHPWord->createSection();
-$section_UnitGoals->addText('
+$section_UnitGoals->addText('Demonstrate investigation and interpretation skills necessary to solve problems of evidence and achieve independence in researching');
+$section_UnitGoals->addText('Communicate a logically developed, articulate and focussed arguement to convey historical positions or ideas');
+
+//Create Content Section
+$section_Content = $PHPWord->createSection();
+$section_Content->addText(strtoupper('Content'), 'fontStyle_Upper');
+$section_Content->addText('A study of this unit should include the following topics. There is scope for some areas to be treated in more depth than others. Depth of topics will be guided by teacher expertise and student interest');
+
+//Load Content
+$section_Content->addListItem('The Flavians - Restoration of Order', 0, null, $listBullet);
+$section_Content->addListItem('Militarisation of Government', 0, null, $listBullet);
+$section_Content->addListItem('Judaism and Christianity - challenges to the Roman order', 0, null, $listBullet);
+$section_Content->addListItem('Constantine the Great - a State Religion?', 0, null, $listBullet);
+
+//Create Assessment Items Section
+section_AssessmentItems = $PHPWord->createSection();
 
 
 ?>
