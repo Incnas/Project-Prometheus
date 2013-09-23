@@ -3,6 +3,7 @@
 // Include classes
 include_once('tbs_class.php'); // Load the TinyButStrong template engine
 include_once('../tbs_plugin_opentbs.php'); // Load the OpenTBS plugin
+include('../includes/login.inc.php')
 
 // Initalize the TBS instance
 $TBS = new clsTinyButStrong; // new instance of TBS
@@ -13,6 +14,25 @@ $TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN); // load the OpenTBS plugin
 // ------------------------------
 
 // Retrieve the user name to display
+
+$query="SELECT
+	unit.course as course_name, 
+	unit.name as unit_name, 
+	SUBSTRING(class.session_num, 5,1) as session,
+	SUBSTRING(class.session_num, 1, 4) as year,
+	unit.std_units,
+	class_code,
+	CONCAT(user.fname, ' ', user.lname) as teacher_name,
+	goals,
+	content 
+FROM class JOIN `unit` on class.unit_code = unit.unit_code JOIN user on class.teacher_code = user.username where class.class_code=?"
+$stmt=$mysqli->prepare($query);
+$stmt->bind_param('s', '626_3');
+$stmt->execute();
+$data=bind_result_array($stmt);
+$stmt->fetch();
+
+
 
 $course_name = "PHYSICS";
 $unit_name = "ASTROPHYSICS";
@@ -27,12 +47,41 @@ $assessment = array();
 $assessment[] = array('name'=>'Test', 'weight'=>'60%', 'due'=>'Test Week');
 $assessment[] = array('name'=>'Practical Work', 'weight'=>'40%', 'due'=>'Ongoing');
 
-$unit_goals = array();
-$unit_goals[] = array('text'=>"Outline the general structure of the solar system and distinguish between a stellar cluster and a constellation;");
-$unit_goals[] = array('text'=>"Define the luminosity of a star and apparent brightness, understand how it is measured and apply the Stefan–Boltzmann law to compare the luminosities of different stars.");
-$unit_goals[] = array('text'=>"Describe quantitatively the different types of star and identify the characteristics of spectroscopic and eclipsing binary stars");
-$unit_goals[] = array('text'=>"Identify the general regions of star types on a Hertzsprung–Russell (HR) diagram and understand the evolutionary paths of stars on an HR diagram;");
-$unit_goals[] = array('text'=>"Identify the main features of the Big Bang and the expansion of the universe and explain how cosmic radiation in the microwave region is consistent with the Big Bang model");
+$unit_goals = array.split($data['goals'], '\n');
+print_r($unit_goals);
+exit();
+
+
+// -----------------
+// Load the template
+// -----------------
+
+$template = 'test_template.docx';
+$TBS->LoadTemplate($template); // Also merge some [onload] automatic fields (depends of the type of document).
+
+// Merge data in the body of the document
+//$TBS->MergeBlock('a,b', $data);
+$TBS->MergeBlock('unit_goals', $unit_goals);
+$TBS->MergeBlock('assessment', $assessment);
+
+
+// -----------------
+// Output the result
+// -----------------
+
+// Define the name of the output file
+$save_as = (isset($_POST['save_as']) && (trim($_POST['save_as'])!=='') && ($_SERVER['SERVER_NAME']=='localhost')) ? trim($_POST['save_as']) : '';
+$output_file_name = str_replace('.', '_'.date('Y-m-d').$save_as.'.', $template);
+if ($save_as==='') {
+	// Output the result as a downloadable file (only streaming, no data saved in the server)
+	$TBS->Show(OPENTBS_DOWNLOAD, $output_file_name); // Also merges all [onshow] automatic fields.
+} else {
+	// Output the result as a file on the server
+	$TBS->Show(OPENTBS_FILE+TBS_EXIT, $output_file_name); // Also merges all [onshow] automatic fields.
+}
+
+
+
 
 
 // A recordset for merging tables
@@ -51,12 +100,7 @@ $x_bt = true;
 $x_bf = false;
 $x_delete = 1;
 */		
-// -----------------
-// Load the template
-// -----------------
 
-$template = 'test_template.docx';
-$TBS->LoadTemplate($template); // Also merge some [onload] automatic fields (depends of the type of document).
 
 // ----------------------
 // Debug mode of the demo
@@ -69,10 +113,7 @@ if (isset($_POST['debug']) && ($_POST['debug']=='show'))    $TBS->Plugin(OPENTBS
 // Merging and other operations on the template
 // --------------------------------------------
 
-// Merge data in the body of the document
-//$TBS->MergeBlock('a,b', $data);
-$TBS->MergeBlock('unit_goals', $unit_goals);
-$TBS->MergeBlock('assessment', $assessment);
+
 
 
 /*
@@ -87,17 +128,4 @@ $TBS->PlugIn(OPENTBS_CHART, $ChartNameOrNum, $SeriesNameOrNum, $NewValues, $NewL
 //$TBS->PlugIn(OPENTBS_DELETE_COMMENTS);
 
 
-// -----------------
-// Output the result
-// -----------------
 
-// Define the name of the output file
-$save_as = (isset($_POST['save_as']) && (trim($_POST['save_as'])!=='') && ($_SERVER['SERVER_NAME']=='localhost')) ? trim($_POST['save_as']) : '';
-$output_file_name = str_replace('.', '_'.date('Y-m-d').$save_as.'.', $template);
-if ($save_as==='') {
-	// Output the result as a downloadable file (only streaming, no data saved in the server)
-	$TBS->Show(OPENTBS_DOWNLOAD, $output_file_name); // Also merges all [onshow] automatic fields.
-} else {
-	// Output the result as a file on the server
-	$TBS->Show(OPENTBS_FILE+TBS_EXIT, $output_file_name); // Also merges all [onshow] automatic fields.
-}
