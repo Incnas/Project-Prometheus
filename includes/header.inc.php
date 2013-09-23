@@ -21,17 +21,20 @@ include('login.inc.php');
 <body>
 <div class="container">
 <div class="header">
+<h1>Welcome to NOAH</h1>
 <img src="/images/header.png" />
+</div>
+<div class="title">
+	Logged in as: <? echo $_SESSION['user_name']; ?>
+	<a href="/logout.php">Logout</a>
 </div>
 <div class="menu">
 	<ul id="menu">
 			<li><a href="/index.php">Home</a></li>
-			<li><a href="/video/">Videos</a></li>
-			<li><a href="/order/">Order Details</a></li>
-			<li><a href="/user/">My Details</a></li>
-			<? if($_SESSION['user_isadmin']) echo '<li><a href="/admin/">Administration</a></li>'; ?>
-			<li><a href="/logout.php">Logout</a></li>			
-
+			<li><a href="/news.php">News</a></li>
+			<li><a href="/prophet.php">Prophet</a></li>
+			<li><a href="/user.php">My Details</a></li>
+			<? if($_SESSION['user_isadmin']) echo '<li><a href="/admin/">Administration</a></li>'; ?>	
 	</ul>
 </div>
 <div id="content">

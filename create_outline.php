@@ -10,7 +10,7 @@ $PHPWord = new PHPWord();
 $properties = $PHPWord->getProperties();
 $properties->setCreator('Teacher Name');
 $properties->setCompany('Narrabundah College');
-$properties->setTitles('Unit Outline');
+$properties->setTitle('Unit Outline');
 $properties->setDescription('My Description');
 
 //Create Fonts and Templates
@@ -60,9 +60,23 @@ $table_Assessment = $section_AssessmentItems->addTable();
 
 //For each row add cells
 $table_Assessment->addRow();
-$cell = $table_Assessment->addCell();
+$cell = $table_Assessment->addCell(2000);
+$cell->addText('Item');
+$cell = $table_Assessment->addCell(2000);
+$cell->addText('Weighting');
+$cell = $table_Assessment->addCell(2000);
+$cell->addText('Due');
 
+$table_Assessment->addRow();
+$cell = $table_Assessment->addCell(2000);
+$cell->addText('Research Essay');
+$cell = $table_Assessment->addCell(2000);
+$cell->addText('50');
+$cell = $table_Assessment->addCell(2000);
+$cell->addText('Friday Week 4');
+
+//Save File to a Location
 $objWriter = PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
-$objWriter->save('Unit Outline.docx');
+$objWriter->save('Unit_Outline.docx');
 
 ?>

@@ -25,7 +25,7 @@ $mysqlusername="prometheus";
 $mysqlpassword="v3ApJX6YEfXVXKup";
 $database="prometheus";
 
-//single most important video in the site.
+//single most important video in the site. What
 $mysqli= new mysqli('localhost', $mysqlusername, $mysqlpassword, $database);
 
 if(mysqli_connect_errno()) {
