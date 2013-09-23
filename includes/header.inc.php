@@ -25,15 +25,16 @@ include('login.inc.php');
 <img src="/images/header.png" />
 </div>
 <div class="title">
-	Logged in as: <? echo $_SESSION['user_name']; ?>
+	Logged in as: <? echo $_SESSION['user']['name']; ?>
 	<a href="/logout.php">Logout</a>
 </div>
 <div class="menu">
 	<ul id="menu">
 			<li><a href="/index.php">Home</a></li>
 			<li><a href="/news.php">News</a></li>
+			<li><a href="/allClasses.php">All Classes</a></li>
 			<li><a href="/prophet.php">Prophet</a></li>
-			<li><a href="/user.php">My Details</a></li>
+			<li><a href="/user.php">Settings</a></li>
 			<? if($_SESSION['user_isadmin']) echo '<li><a href="/admin/">Administration</a></li>'; ?>	
 	</ul>
 </div>
