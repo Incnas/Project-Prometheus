@@ -3,7 +3,7 @@
 // Include classes
 include_once('tbs_class.php'); // Load the TinyButStrong template engine
 include_once('../tbs_plugin_opentbs.php'); // Load the OpenTBS plugin
-include('../includes/login.inc.php')
+include('../includes/login.inc.php');
 
 // Initalize the TBS instance
 $TBS = new clsTinyButStrong; // new instance of TBS
@@ -25,44 +25,44 @@ $query="SELECT
 	CONCAT(user.fname, ' ', user.lname) as teacher_name,
 	goals,
 	content 
-FROM class JOIN `unit` on class.unit_code = unit.unit_code JOIN user on class.teacher_code = user.username where class.class_code=?"
+FROM class JOIN `unit` on class.unit_code = unit.unit_code JOIN user on class.teacher_code = user.username where class.class_code=?";
 $stmt=$mysqli->prepare($query);
-$stmt->bind_param('s', '626_3');
+$class='626_3';
+$stmt->bind_param('s', $class);
 $stmt->execute();
 $data=bind_result_array($stmt);
 $stmt->fetch();
-
-
-
-$course_name = "PHYSICS";
-$unit_name = "ASTROPHYSICS";
-$session_num = "3";
-$year = "2013";
-$session_pts = "0.5";
-$class_num = "626_3";
-$teacher_name = "Rae Pottenger";
-
 
 $assessment = array();
 $assessment[] = array('name'=>'Test', 'weight'=>'60%', 'due'=>'Test Week');
 $assessment[] = array('name'=>'Practical Work', 'weight'=>'40%', 'due'=>'Ongoing');
 
-$unit_goals = array.split($data['goals'], '\n');
-print_r($unit_goals);
-exit();
+function txt2array($input){
+	$tmp = preg_split('/$\R?^/m', $input);
+	foreach($tmp as $item){
+		$output[]=array('text'=> trim($item));
+	}
+	return $output;
+}
+$unit_goals = txt2array($data['goals']);
+$unit_content = txt2array($data['content']);
 
+//print_r($unit_goals);
 
+//exit();
 // -----------------
 // Load the template
 // -----------------
 
-$template = 'test_template.docx';
+$template = '../unit_outline_templates/default.docx';
 $TBS->LoadTemplate($template); // Also merge some [onload] automatic fields (depends of the type of document).
 
 // Merge data in the body of the document
 //$TBS->MergeBlock('a,b', $data);
+$TBS->MergeBlock('data', array($data));
+
 $TBS->MergeBlock('unit_goals', $unit_goals);
-$TBS->MergeBlock('assessment', $assessment);
+$TBS->MergeBlock('unit_content', $unit_content);
 
 
 // -----------------
