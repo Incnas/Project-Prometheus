@@ -22,10 +22,11 @@ $query="SELECT
 	SUBSTRING(class.session_num, 1, 4) as year,
 	unit.std_units,
 	class_code,
+	unit.unit_code,
 	CONCAT(user.fname, ' ', user.lname) as teacher_name,
 	goals,
 	content 
-FROM class JOIN `unit` on class.unit_code = unit.unit_code JOIN user on class.teacher_code = user.username where class.class_code=?";
+FROM class JOIN `unit` on class.unit_code = unit.unit_code JOIN user on class.teacher_code = user.username where class.class_code=? LIMIT 1";
 $stmt=$mysqli->prepare($query);
 $class='626_3';
 $stmt->bind_param('s', $class);
@@ -33,9 +34,6 @@ $stmt->execute();
 $data=bind_result_array($stmt);
 $stmt->fetch();
 
-$assessment = array();
-$assessment[] = array('name'=>'Test', 'weight'=>'60%', 'due'=>'Test Week');
-$assessment[] = array('name'=>'Practical Work', 'weight'=>'40%', 'due'=>'Ongoing');
 
 function txt2array($input){
 	$tmp = preg_split('/$\R?^/m', $input);
@@ -47,7 +45,22 @@ function txt2array($input){
 $unit_goals = txt2array($data['goals']);
 $unit_content = txt2array($data['content']);
 
-//print_r($unit_goals);
+$stmt->close();
+
+$query="SELECT * FROM assessment_item where unit_code=?";
+$stmt=$mysqli->prepare($query);
+$stmt->bind_param('s', $data['unit_code']);
+$stmt->execute();
+$tmp = bind_result_array($stmt);
+$assessment = array();
+$stmt->fetch();
+	//$assessment[] = $tmp;
+	array_push($assessment, $tmp);
+print_r($assessment);
+
+
+exit();
+
 
 //exit();
 // -----------------
@@ -63,6 +76,7 @@ $TBS->MergeBlock('data', array($data));
 
 $TBS->MergeBlock('unit_goals', $unit_goals);
 $TBS->MergeBlock('unit_content', $unit_content);
+$TBS->MergeBlock('assessment', $assessment);
 
 
 // -----------------
