@@ -8,8 +8,7 @@ $stmt->execute();
 $stmt->store_result();
 $row=bind_result_array($stmt);
 ?>
-<p>TODO: List Available Classes</p>
-<p>Each class should be the same "Using PHP?"</p>
+<h3>LIST OF ALL CLASSES</h3>
 <?
 while($stmt->fetch()){
 	$query = "SELECT * FROM assessment_item WHERE unit_code=?";
@@ -20,20 +19,6 @@ while($stmt->fetch()){
 ?>
 <h4><?=$row['name'].' - Line: '.$row['line']; ?></h4>
 <p><b>Teacher:</b> <?=$row['fname'].' '.$row['lname']; ?></p>
-<p><b>Resources:</b></p>
-<table class='datagrid'>
-<thead>
-<tr>
-<th>Name</th>
-<th>Last Updated</th>
-<th>Edit</th>
-</tr>
-</thead>
-<tr>
-<td>Unit Outline</td>
-
-</tr>
-</table>
 <p><b>Assessments: </b></p>
 <div class='datagrid'>
 <table>

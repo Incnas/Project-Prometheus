@@ -32,7 +32,7 @@ include('login.inc.php');
 	<ul id="menu">
 			<li><a href="/index.php">Home</a></li>
 			<li><a href="/news.php">News</a></li>
-			<li><a href="/allClasses.php">All Classes</a></li>
+			<li><a href="/class_lists.php">All Classes</a></li>
 			<li><a href="/prophet.php">Prophet</a></li>
 			<li><a href="/user.php">Settings</a></li>
 			<? if($_SESSION['user_isadmin']) echo '<li><a href="/admin/">Administration</a></li>'; ?>	
