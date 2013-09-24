@@ -1,6 +1,7 @@
 <?
 //Root index.php
 include($_SERVER['DOCUMENT_ROOT'].'/includes/header.inc.php');
+include($_SERVER['DOCUMENT_ROOT'].'/includes/sidebar.inc.php');
 
 $query = "SELECT * FROM class JOIN user ON class.teacher_code = user.username JOIN unit ON class.unit_code = unit.unit_code";
 $stmt=$mysqli->prepare($query);
@@ -8,8 +9,7 @@ $stmt->execute();
 $stmt->store_result();
 $row=bind_result_array($stmt);
 ?>
-<p>TODO: List Available Classes</p>
-<p>Each class should be the same "Using PHP?"</p>
+<h1>My Classes</h1>
 <?
 while($stmt->fetch()){
 	$query = "SELECT * FROM assessment_item WHERE unit_code=?";
@@ -64,12 +64,6 @@ while($stmt->fetch()){
 }
 $stmt->close();
 ?>
-<p>TODO: Create Side-Bar</p>
-<p>Sidebar should contain:</p>
-<h4>Registered Classes</h4>
-<h4>Upcoming Assessment</h4>
-<h4>Upcoming School Events</h4>
-
 <?
 include($_SERVER['DOCUMENT_ROOT'].'/includes/footer.inc.php');
 ?>
