@@ -16,7 +16,7 @@ if(isset($_POST['username'])){
 				$_SESSION['authenticated']=true;
 				$_SESSION['user']['name']=$result['username'];
 				$_SESSION['user']['id']=$result['id'];
-				//$_SESSION['user']['isadmin']=$result['user_isadmin'];
+				if($result['role']=='admin') $_SESSION['user']['isadmin']=true;
 				echo 1;
 				exit;
 			}

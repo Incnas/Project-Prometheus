@@ -1,6 +1,8 @@
 <? 
 //Main header page for website.
 
+error_reporting(-1);
+
 //Start page load time counter
 $pageload = microtime(true);
 include('login.inc.php');
@@ -35,7 +37,7 @@ include('login.inc.php');
 			<li><a href="/class_lists.php">All Classes</a></li>
 			<li><a href="/prophet.php">Prophet</a></li>
 			<li><a href="/user.php">Settings</a></li>
-			<? if($_SESSION['user_isadmin']) echo '<li><a href="/admin/">Administration</a></li>'; ?>	
+			<? if($_SESSION['user']['isadmin']) echo '<li><a href="/admin/">Administration</a></li>'; ?>	
 	</ul>
 </div>
 <div id="content">
