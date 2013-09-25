@@ -22,7 +22,7 @@ include('login.inc.php');
 <div class="container">
 <div class="header">
 <h1>Welcome to NOAH</h1>
-<img src="/images/header.png" />
+<!--<img src="/images/header.png" />-->
 </div>
 <div class="title">
 	Logged in as: <? echo $_SESSION['user']['name']; ?>
