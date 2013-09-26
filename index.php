@@ -21,19 +21,7 @@ while($stmt->fetch()){
 <h4><?=$row['name'].' - Line: '.$row['line']; ?></h4>
 <p><b>Teacher:</b> <?=$row['fname'].' '.$row['lname']; ?></p>
 <p><b>Resources:</b></p>
-<table class='datagrid'>
-<thead>
-<tr>
-<th>Name</th>
-<th>Last Updated</th>
-<th>Edit</th>
-</tr>
-</thead>
-<tr>
-<td>Unit Outline</td>
-
-</tr>
-</table>
+<a href='/edit_info.php?unit_code=<?=$row["unit_code"]?>'>Edit</a>
 <p><b>Assessments: </b></p>
 <div class='datagrid'>
 <table>
@@ -60,6 +48,7 @@ while($stmt->fetch()){
 ?>
 </table>
 </div>
+<button type="button">Expand</button>
 <?
 }
 $stmt->close();
