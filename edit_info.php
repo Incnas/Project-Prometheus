@@ -13,14 +13,14 @@ $stmt->fetch();
 
 $query = "SELECT * FROM class JOIN user ON user.username=class.teacher_code WHERE unit_code=?";
 $stmt2=$mysqli->prepare($query);
-$stmt2->bind_param('s',$_GET['unit_code']);
+$stmt2->bind_param('s',$row['unit_code']);
 $stmt2->execute();
 $stmt2->store_result();
 $row2=bind_result_array($stmt2);
 ?>
 <div class='section'>
 <h4><?=$row['name']?></h4>
-<h4>Unit Code: <?=$row['unit_code']?></h4>
+<h4>Unit Code: <?=$_GET['unit_code']?></h4>
 <h4>Line(s): </h4>
 <?
 $stmt2->data_seek(0);
@@ -35,7 +35,6 @@ while($stmt2->fetch()){
 	echo $row2['fname'].' '.$row2['lname'].' ('.$row2['class_code'].')';
 }
 ?>
-<form name='input' action="html_form_action.asp" method="post">
 
 <h4>Unit Goals:</h4>
 <p>Note: Each New Line Is An Individual Entry</p>
@@ -49,21 +48,7 @@ Test Text Area. NOTE:THE SIZE IS CHANGABLE. NEEDS FIX
 Test Text Area. NOTE:THE SIZE IS CHANGABLE. NEEDS FIX
 </textarea>
 
-<? 
-$stmt->close();
-$stmt2->close();
-
-
-$query="SELECT * FROM assessment_item where unit_code=?";
-$stmt=$mysqli->prepare($query);
-$stmt->bind_param('s', $_GET['unit_code']);
-$stmt->execute();
-$row=bind_result_array($stmt);
-
-
-?>
-
-<h4>Assessment Items:</h4><button class="new" type="button">Add Assessment</button>
+<h4>Assessment Items:</h4><button class="new" id="<?=$row['unit_code']?>">Add Assessment</button>
 <div class='datagrid'>
 <table>
 <thead>
@@ -76,6 +61,19 @@ $row=bind_result_array($stmt);
 		<th>Delete</th>
 	</tr>
 </thead>
+
+<? 
+$stmt->close();
+$stmt2->close();
+
+
+$query="SELECT * FROM assessment_item where unit_code=?";
+$stmt=$mysqli->prepare($query);
+$stmt->bind_param('s', $_GET['unit_code']);
+$stmt->execute();
+$row=bind_result_array($stmt);
+?>
+
 <tbody>
 	<? while($stmt->fetch()){
 		?>
@@ -84,8 +82,8 @@ $row=bind_result_array($stmt);
 		<td><?=$row['weighting'];?></td>
 		<td><?=$row['out_date'];?></td>
 		<td><?=$row['due_date'];?></td>
-		<td><button class="edit" id= <?=$row['id'] ?> >Edit</button></td>
-		<td><button class="delete" id= <?=$row['id'] ?> >Delete</button></td>
+		<td><button class="edit" id= "<?=$row['id'] ?>" >Edit</button></td>
+		<td><button class="delete" id= "<?=$row['id'] ?>" >Delete</button></td>
 	</tr>	
 <?
 }
@@ -98,12 +96,15 @@ $row=bind_result_array($stmt);
 <button type="button">Default</button>
 <input type="submit" formaction="preview_template" value="Preview" />
 <input type="submit" value="Submit" />
-</form>
+
 </div>
 <?
 include($_SERVER['DOCUMENT_ROOT'].'/includes/footer.inc.php');
 ?>
 
+<div class="edit_assessment"></div>
+<div class="new_assessment"></div>
+<div class="delete_assessment"><h1>ARE YOU SURE!!!???!!!</h1></div>
 <script>
 //Edit assessment Button
 $(function(){
@@ -111,7 +112,9 @@ $(function(){
 		icons:{primary: "ui-icon-pencil"}
 	}).click(function(){
 		var path = '/ajax/edit_assessment.php?id='+$(this).attr('id');
-		$('div.edit_assessment').load(path).dialog('open');
+		$('div.edit_assessment').
+		load(path).
+		dialog('open');
 	});
 	$('div.edit_assessment').dialog({
 		autoOpen: false,
@@ -127,7 +130,7 @@ $(function(){
 				var qstring=$(this).find('form').serialize();
 				$(this).dialog({buttons: {"Loading....":function(){}}});
 				$(this).load('/ajax/edit_assessment.php?'+qstring,'',function(){
-					location.href = location.pathname;
+					location.href = location.href;
 				});
 			}
 		}
@@ -151,7 +154,7 @@ $(function(){
 			"Delete": function(){
 				var path = "/ajax/delete_assessment.php?id="+$(this).attr('id');
 				$.get(path, function(){
-					location.href = location.pathname;
+					location.href = location.href;
 				})
 			},
 			"Cancel": function(){
@@ -164,7 +167,8 @@ $(function(){
 	$('button.new').button({
 		icons :{primary: "ui-icon-plusthick"}
 	}).click(function(){
-		$('div.new_assessment').load('/ajax/new_assessment.php').dialog('open');
+		var path = '/ajax/new_assessment.php?unit_code='+$(this).attr('id');
+		$('div.new_assessment').load(path).dialog('open');
 	})
 	
 	$('div.new_assessment').dialog({
@@ -181,7 +185,7 @@ $(function(){
 				var qstring=$(this).find('form').serialize();
 				$(this).dialog({buttons: {"Loading....":function(){}}});
 				$(this).load('/ajax/new_assessment.php?'+qstring,'',function(){
-					location.href = location.pathname;
+					location.href = location.href;
 				});
 			}
 		}
