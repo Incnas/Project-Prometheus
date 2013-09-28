@@ -40,6 +40,10 @@ if(isset($_SESSION['authenticated']) && $_SESSION['authenticated']==true){
         <span id="error" style="color:red">
              
         </span>
+	<button class="btn_student">Student</button>
+	<button class="btn_teacher">Teacher</button>
+	<button class="btn_guest">Guest</button>
+	<div id="input_form">
         <form id="login" method="" action="">
         	
             <p>Username: <input type="text" name="username" autofocus="autofocus" autocomplete="off" size="20"></p>
@@ -47,7 +51,24 @@ if(isset($_SESSION['authenticated']) && $_SESSION['authenticated']==true){
             <p>Password: <input type="password" name="password" size="20"></p>
             <button type="submit" id="submit">Login</button>
         </form>
-        <!-- <p>New? <a href="/user/register.php">Register Here</a></p> -->
+	</div>
     </div>
 </body>
+
+<!--Scripts to handle button presses-->
+<script>
+$('button.btn_student').button({
+	}).click(function(){
+		//Change The visibility of the form etc...
+	});
+$('button.btn_teacher').button({
+	}).click(function(){
+		
+	});
+$('button.btn_guest').button({
+	}).click(function(){
+		
+	});
+</script>
+
 </html>
