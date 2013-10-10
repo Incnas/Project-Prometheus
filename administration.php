@@ -17,8 +17,13 @@
 <h3>Upload Teacher Classes</h3>
 <h3>Upload Calender</h3>
 <h4>Edit Calender</h4>
-<button class="delete">Clear Calender</button>
-<button class="new">Add Week</button>
+<button class="clear">Clear Calender</button>
+<button class="new">Add Week(s)</button>
+<button class="delete">Delete Week</button>
+<form>
+Session Name: <input type="text" name="session_name"><br>
+Start Date: <input type="date" name="start_date"><br>
+</form>
 <div class='datagrid'>
 	<table>
 		<thead>
@@ -53,10 +58,11 @@
 ?>
 <div class="new_week"></div>
 <div class="clear_calender">Are you sure? This move is irreversable.</div>
+<div class="delete_week">Are you sure?</div>
 <script>
 $(function(){
 //Clear Calender Button	
-	$('button.delete').button({
+	$('button.clear').button({
 		icons:{primary:"ui-icon-trash"}
 	}).click(function(){
 		$('div.clear_calender').dialog('open').attr('id', $(this).attr('id'));
@@ -72,6 +78,32 @@ $(function(){
 		buttons: {
 			"Delete": function(){
 				var path = "/ajax/clear_calender.php?id="+$(this).attr('id');
+				$.get(path, function(){
+					location.href = location.href;
+				})
+			},
+			"Cancel": function(){
+				$(this).dialog('close');
+			}
+		}
+	})
+//Delete Weeks Button	
+	$('button.delete').button({
+		icons:{primary:"ui-icon-trash"}
+	}).click(function(){
+		$('div.delete_week').dialog('open').attr('id', $(this).attr('id'));
+	})
+	$('div.delete_week').dialog({
+		autoOpen: false,
+		height: 200,
+		width: 350,
+		modal: true,
+		resizable: false,
+		draggable: false,
+		title: "Delete Week(s)?",
+		buttons: {
+			"Delete": function(){
+				var path = "/ajax/delete_week.php?id="+$(this).attr('id');
 				$.get(path, function(){
 					location.href = location.href;
 				})
@@ -109,6 +141,11 @@ $(function(){
 			}
 		}
 	})
-
+	$('button.new_calender').button({
+		icons :{primary: "ui-icon-plusthick"}
+	}).click(function(){
+		var path = '/ajax/new_calender.php';
+		$('div.new_calender').load(path).dialog('open');
+	})
 })
 </script>
