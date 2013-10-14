@@ -2,7 +2,7 @@
 //Root index.php
 include($_SERVER['DOCUMENT_ROOT'].'/includes/header.inc.php');
 
-$query = "SELECT * FROM class JOIN teachers ON class.teacher_code = teachers.username JOIN unit ON class.unit_code = unit.unit_code";
+$query = "SELECT * FROM class JOIN user ON class.teacher_code = user.username JOIN unit ON class.unit_code = unit.unit_code";
 $stmt=$mysqli->prepare($query);
 $stmt->execute();
 $stmt->store_result();
@@ -49,6 +49,11 @@ while($stmt->fetch()){
 }
 $stmt->close();
 ?>
+<p>TODO: Create Side-Bar</p>
+<p>Sidebar should contain:</p>
+<h4>Registered Classes</h4>
+<h4>Upcoming Assessment</h4>
+<h4>Upcoming School Events</h4>
 
 <?
 include($_SERVER['DOCUMENT_ROOT'].'/includes/footer.inc.php');

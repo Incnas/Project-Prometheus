@@ -40,15 +40,3 @@ function td ($data, $class = NULL) //Generates a td element with optional class
 	echo $data.'</td>';
 	
 }
-
-function select_enum($col_name, $tbl_name, $mysqli)
-{ 
-	echo "<select name=\"$col_name\">"; 
-	$stmt=$mysqli->prepare("SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$tbl_name' AND COLUMN_NAME = '$col_name'");
-	$stmt->execute();
-	$stmt->bind_result($result);
-	$stmt->fetch(); 
-	$enumList = explode(",", str_replace("'", "", substr($result, 5, (strlen($result)-6))));
-	foreach($enumList as $value) echo "<option value=\"$value\">$value</option>"; 
-	echo "</select>";
-}
