@@ -34,7 +34,7 @@ include('login.inc.php');
 <div class="menu">
 	<ul id="menu">
 		<li><a href="/index.php">Home</a></li>
-		<li><a href="/news.php">My Classes</a></li>
+		<li><a href="/my_classes.php">My Classes</a></li>
 		<li><a href="/class_lists.php">All Classes</a></li>
 		<li><a href="/prophet.php">Prophet</a></li>
 		<li><a href="/user.php">Settings</a></li>
