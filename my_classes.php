@@ -2,8 +2,15 @@
 	//Root index.php
 	include($_SERVER['DOCUMENT_ROOT'].'/includes/header.inc.php');
 	include($_SERVER['DOCUMENT_ROOT'].'/includes/sidebar.inc.php');
-
-	$query = "SELECT * FROM class JOIN user ON class.teacher_code = user.username JOIN unit ON class.unit_code = unit.unit_code";
+	if($_SESSION['user']['role']=='student'){
+		$query = "SELECT * FROM class JOIN student_class ON class.class_code = student_class.class_code JOIN student ON student_class.student_code = student.student_code JOIN unit ON class.unit_code = unit.unit_code WHERE student_code=?";
+	}
+	elseif($_SESSION['user']['role']=='teacher'){
+		$query = "SELECT * FROM class JOIN user ON class.teacher_code = teacher.username JOIN unit ON class.unit_code = unit.unit_code";
+	}
+	else{
+		$query= "";
+	}
 	$stmt=$mysqli->prepare($query);
 	$stmt->execute();
 	$stmt->store_result();
