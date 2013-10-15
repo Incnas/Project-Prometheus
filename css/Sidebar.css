@@ -1,0 +1,14 @@
+#rightside {
+margin: 0px auto;
+position:relative;
+}
+.sidebar {
+    border-style: solid;
+    border-color: gray;
+    border-width: 1px;
+	 
+    float: right;
+    text-align: left;
+	
+}
+
