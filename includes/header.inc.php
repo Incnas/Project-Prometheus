@@ -15,6 +15,7 @@ include('login.inc.php');
 <script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="/js/jquery-ui-1.10.3.custom.js"></script>
 <script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/change_css.js"></script>
 
 <link href="/css/redmond/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css" />
 <link href="/css/main.css" rel="stylesheet" type="text/css" />
@@ -32,12 +33,12 @@ include('login.inc.php');
 </div>
 <div class="menu">
 	<ul id="menu">
-			<li><a href="/index.php">Home</a></li>
-			<li><a href="/news.php">News</a></li>
-			<li><a href="/class_lists.php">All Classes</a></li>
-			<li><a href="/prophet.php">Prophet</a></li>
-			<li><a href="/user.php">Settings</a></li>
-			<? if($_SESSION['user']['isadmin']) echo '<li><a href="/admin/">Administration</a></li>'; ?>	
+		<li><a href="/index.php">Home</a></li>
+		<li><a href="/my_classes.php">My Classes</a></li>
+		<li><a href="/class_lists.php">All Classes</a></li>
+		<li><a href="/prophet.php">Prophet</a></li>
+		<li><a href="/user.php">Settings</a></li>
+		<li><a href="/CustomerService.php">Customer Service</a></li>
+		<? if($_SESSION['user']['isadmin']) echo '<li><a href="/administration.php">Administration</a></li>'; ?>	
 	</ul>
 </div>
-<div id="content">
