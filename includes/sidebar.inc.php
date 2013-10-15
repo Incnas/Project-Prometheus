@@ -1,3 +1,6 @@
+<head>
+<link rel="stylesheet" type="text/css" href="/css/Sidebar.css">
+</head>
 <? 
 //Main header page for website.
 

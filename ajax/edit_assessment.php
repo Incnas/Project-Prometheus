@@ -2,17 +2,17 @@
 //Displays form and updates assessment in db
 
 include($_SERVER['DOCUMENT_ROOT'].'/includes/login.inc.php');
-if(isset($_GET['id'])){
+if(isset($_GET['name'])){
 	//Update assessment db
-	$query = "UPDATE `assessment_items` set  unit_code = ?, name = ?, weighting = ?, out_date = ?, due_date = ? WHERE id = ?";
+	$query = "UPDATE `assessment_item` set name = ?, weighting = ?, out_date = ?, due_date = ? WHERE id = ?";
 	$stmt = $mysqli->prepare($query);
-	$stmt->bind_param('ssissi', $_GET['unit_code'], $_GET['name'], $_GET['weighting'], $_GET['out_date'], $_GET['due_date'], $_GET['id']);
+	$stmt->bind_param('sissi', $_GET['name'], $_GET['weighting'], $_GET['out_date'], $_GET['due_date'], $_GET['id']);
 	$stmt->execute();
 	$stmt->close();
 	echo 'Success';
 }
 // Get assessment details
-$query="SELECT * from assessment_items where id = ? LIMIT 1";
+$query="SELECT * from assessment_item where id = ? LIMIT 1";
 $stmt=$mysqli->prepare($query);
 $stmt->bind_param('i', $_GET['id']);
 $stmt->execute();
@@ -39,6 +39,10 @@ if($stmt->fetch()){
 		<tr>
 			<td>Due Date:</td>
 			<td><input type="text" size="30" name="due_date" value="<?=$row['due_date']?>" /></td>
+		</tr>
+		<tr>
+			<td>Due Type:</td>
+			<td><?select_enum('type','calender', $mysqli)?></td>
 		</tr>
 	</table>
 	</form>

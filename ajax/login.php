@@ -5,7 +5,7 @@ $reqauth = false;
 
 include($_SERVER['DOCUMENT_ROOT'].'/includes/login.inc.php');
 if(isset($_POST['username'])){	
-	if ($stmt = $mysqli-> prepare("SELECT * FROM `user` where `username` = ? LIMIT 1")){
+	if ($stmt = $mysqli-> prepare("SELECT * FROM `{$_POST['role']}` where `username` = ? LIMIT 1")){
 		$stmt-> bind_param("s", $_POST['username']);
 		$stmt-> execute();
 		$stmt-> store_result();
@@ -15,6 +15,7 @@ if(isset($_POST['username'])){
 				// User is authenticated
 				$_SESSION['authenticated']=true;
 				$_SESSION['user']['name']=$result['username'];
+				$_SESSION['user']['role']=$_POST['role'];
 				$_SESSION['user']['id']=$result['id'];
 				if($result['role']=='admin') $_SESSION['user']['isadmin']=true;
 				echo 1;
