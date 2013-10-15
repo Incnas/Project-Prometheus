@@ -3,10 +3,10 @@
 	include($_SERVER['DOCUMENT_ROOT'].'/includes/header.inc.php');
 	include($_SERVER['DOCUMENT_ROOT'].'/includes/sidebar.inc.php');
 	if($_SESSION['user']['role']=='student'){
-		$query = "SELECT * FROM class JOIN student_class ON class.class_code = student_class.class_code JOIN student ON student_class.student_code = student.student_code JOIN unit ON class.unit_code = unit.unit_code WHERE student_code=?";
+		$query = "SELECT * FROM class JOIN student_class ON class.class_code = student_class.class_code JOIN student ON student_class.student_code = student.student_code JOIN unit ON class.unit_code = unit.unit_code JOIN teacher ON class.teacher_code = teacher.username WHERE student.username = ".$_SESSION['user']['name'];
 	}
 	elseif($_SESSION['user']['role']=='teacher'){
-		$query = "SELECT * FROM class JOIN user ON class.teacher_code = teacher.username JOIN unit ON class.unit_code = unit.unit_code";
+		$query = "SELECT * FROM class JOIN teacher ON class.teacher_code = teacher.username JOIN unit ON class.unit_code = unit.unit_code WHERE username = '{$_SESSION['user']['name']}'";
 	}
 	else{
 		$query= "";
@@ -27,8 +27,13 @@
 ?>
 <h4><?=$row['name'].' - Line: '.$row['line']; ?></h4>
 <p><b>Teacher:</b> <?=$row['fname'].' '.$row['lname']; ?></p>
-<!--Should display only if the user is a teacher or admin--><a href='/edit_info.php?unit_code=<?=$row["unit_code"]?>'>Edit</a>
-<!--Implement Unit Outline Generator--><button>View Unit Outline</button> 
+
+<!--Should display only if the user is a teacher or admin-->
+<? if($_SESSION['user']['role']=='teacher'){ ?>
+	<a href='/edit_info.php?unit_code=<?=$row["unit_code"]?>'>Edit</a>
+<? } ?>
+
+<!--Implement Unit Outline Generator--><a href="bad">View Unit Outline</a> 
 <p><b>Assessments: </b></p>
 <div class='datagrid'>
 	<table>
@@ -56,7 +61,7 @@
 		?>
 	</table>
 </div>
-<button type="button">Expand</button>
+<a href='details.php?unit_code=<?=$row["unit_code"]?>'>Details</a>
 <?
 }
 $stmt->close();

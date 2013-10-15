@@ -52,3 +52,11 @@ function select_enum($col_name, $tbl_name, $mysqli)
 	foreach($enumList as $value) echo "<option value=\"$value\">$value</option>"; 
 	echo "</select>";
 }
+
+function txt2array($input){
+	$tmp = preg_split('/$\R?^/m', $input);
+	foreach($tmp as $item){
+		$output[]=array('text'=> trim($item));
+	}
+	return $output;
+}

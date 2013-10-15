@@ -38,6 +38,6 @@ include('login.inc.php');
 		<li><a href="/class_lists.php">All Classes</a></li>
 		<li><a href="/prophet.php">Prophet</a></li>
 		<li><a href="/user.php">Settings</a></li>
-		<? if($_SESSION['user']['isadmin']) echo '<li><a href="/administration.php">Administration</a></li>'; ?>	
+		<? if($_SESSION['user']['role']=='admin') echo '<li><a href="/administration.php">Administration</a></li>'; ?>	
 	</ul>
 </div>

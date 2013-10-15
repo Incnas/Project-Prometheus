@@ -11,7 +11,7 @@ $stmt->store_result();
 $row=bind_result_array($stmt);
 $stmt->fetch();
 
-$query = "SELECT * FROM class JOIN user ON user.username=class.teacher_code WHERE unit_code=?";
+$query = "SELECT * FROM class JOIN teacher ON teacher.username=class.teacher_code WHERE unit_code=?";
 $stmt2=$mysqli->prepare($query);
 $stmt2->bind_param('s',$row['unit_code']);
 $stmt2->execute();
@@ -19,7 +19,7 @@ $stmt2->store_result();
 $row2=bind_result_array($stmt2);
 ?>
 <div class='section'>
-<h4><?=$row['name']?></h4>
+<h4>Course Name: <?=$row['name']?></h4>
 <h4>Unit Code: <?=$_GET['unit_code']?></h4>
 <h4>Line(s): </h4>
 <?
@@ -75,19 +75,30 @@ $row=bind_result_array($stmt);
 ?>
 
 <tbody>
-	<? while($stmt->fetch()){
-		?>
+	<? while($stmt->fetch()){ ?>
 	<tr>
 		<td><?=$row['name'];?></td>
 		<td><?=$row['weighting'];?></td>
-		<td><?=$row['out_date'];?></td>
-		<td><?=$row['due_date'];?></td>
+		<? if ($row['type']=='Test Week'){ ?>
+			<td>Test Week</td>
+			<td>Test Week</td>	
+		<? }
+			elseif ($row['type']=='Ongoing'){
+		?>
+			<td>Ongoing</td>
+			<td>Ongoing</td>
+		<? }
+			elseif ($row['type']=='Date'){
+		?>
+			<td><?=$row['out_date'];?></td>
+			<td><?=$row['due_date'];?></td>
+		<? } ?>
 		<td><button class="edit" id= "<?=$row['id'] ?>" >Edit</button></td>
 		<td><button class="delete" id= "<?=$row['id'] ?>" >Delete</button></td>
 	</tr>	
-<?
-}
-?>	
+	<?
+	}
+	?>	
 </tbody>
 </table>
 </div>
@@ -140,7 +151,7 @@ $(function(){
 	$('button.delete').button({
 		icons:{primary:"ui-icon-trash"}
 	}).click(function(){
-		$('div.delete_assessment').dialog('open').attr('id', $(this).attr('id'));
+		$('div.delete_assessment').dialog('open').attr('id', $(this).attr('id'));626_3
 	})
 	$('div.delete_assessment').dialog({
 		autoOpen: false,

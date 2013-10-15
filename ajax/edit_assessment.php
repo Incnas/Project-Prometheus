@@ -40,6 +40,10 @@ if($stmt->fetch()){
 			<td>Due Date:</td>
 			<td><input type="text" size="30" name="due_date" value="<?=$row['due_date']?>" /></td>
 		</tr>
+		<tr>
+			<td>Due Type:</td>
+			<td><?select_enum('type','calender', $mysqli)?></td>
+		</tr>
 	</table>
 	</form>
 	<?
