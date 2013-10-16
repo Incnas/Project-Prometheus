@@ -1,4 +1,3 @@
-
 <?
 	//Root index.php
 	include($_SERVER['DOCUMENT_ROOT'].'/includes/header.inc.php');
@@ -8,13 +7,20 @@
 	$stmt->execute();
 	$stmt->store_result();
 	$row=bind_result_array($stmt);
-	
-	$query2 = "SELECT * FROM `option` WHERE name='session_name'";
-	$stmt2=$mysqli->prepare($query2);
+
+	$query = "SELECT * FROM `option` WHERE name='session_name'";
+	$stmt2=$mysqli->prepare($query);
 	$stmt2->execute();
 	$stmt2->store_result();
 	$row2=bind_result_array($stmt2);
 	$stmt2->fetch();
+	
+	$query3 = "SELECT * FROM `option` WHERE name='session_start_date'";
+	$stmt3=$mysqli->prepare($query3);
+	$stmt3->execute();
+	$stmt3->store_result();
+	$row3=bind_result_array($stmt3);
+	$stmt3->fetch();
 ?>
 
 <h3>Upload Class Lists</h3>
@@ -38,7 +44,7 @@ Session Name: <input type="text" name="session_name" value="<?=$row2['data']?>"/
 	$row2=bind_result_array($stmt2);
 	$stmt2->fetch();
 ?>
-Start Date: <input type="date" name="start_date" value="<?=$row2['data']?>"><br>
+Start Date: <input type="date" name="start_date" value="<?=$row3['data']?>"><br>
 <button type='submit'>Submit</button>
 </form>
 <div class='datagrid'>
@@ -54,14 +60,27 @@ Start Date: <input type="date" name="start_date" value="<?=$row2['data']?>"><br>
 			</tr>
 		</thead>
 	<tbody>
+		<tr>
 	<?
-		while($stmt->fetch()){
-		
-	?>
-			<tr>
-				<td><button class="day">Week <?=$row['week_num'];?></button></td>
-			</tr>	
+		while($stmt->fetch())
+		{
+	?>			
+			<td><!--<button class="day">Week <?=$row['week_num'];?></button>-->
+			<?if($row['day_num']!=0) {
+				//echo $row['day_num'].' ';
+				echo get_date($row3['data'], ($row['week_num']-1)*5+$row['day_num'])->format('d/M');
+			}
+			else{
+				echo 'Week: '.$row['week_num'].' ';
+			}
+			
+			if($row['type']!='School')
+				echo $row['type'];?>
+			</td>
 	<?
+			if($row['day_num']==5){
+				?></tr><tr><?
+			}
 		}
 	?>
 

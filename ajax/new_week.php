@@ -2,35 +2,27 @@
 //Does what it says on the box. Deletes the entire database... Just kidding, it adds a new week
 
 include($_SERVER['DOCUMENT_ROOT'].'/includes/login.inc.php');
-if(isset($_GET['name'])){
-	$last_date=$_GET['start_date'];
-	$query = "SELECT * FROM calender ORDER BY id DESC LIMIT 1";
-	$stmt=$mysqli->prepare($query);
-	$stmt->execute();
-	$stmt->store_result();
-	$row=bind_result_array($stmt);
-	if($stmt->fetch()){
-		$last_date=$row['date'];
-	}
+if(isset($_GET['num_weeks'])){
 	//Add new Address
-	/*foreach($_GET['num_weeks'] as $counter){
+	$query = "SELECT * FROM `calender` ORDER BY week_num DESC LIMIT 1";
+	for($counter = 1; $counter <= $_GET['num_weeks']; $counter++){
 		for($i = 0; $i <=5; $i++){
-			$query = "INSERT into `calender` (week_num, day_num, date, type, notes) VALUES (?,?,?,?,?)";
+			$query = "INSERT INTO `calender` (`id`, `week_num`, `day_num`, `type`, `notes`) VALUES (NULL, ?, ?, ?, ?)";
 			$stmt = $mysqli->prepare($query);
 			echo $mysqli->error;
-			$stmt->bind_param('sssss', 1, $i, 2013-10-16, 'School', 'none');
+			$stmt->bind_param('iiss', $a=$row['week_num']+$counter, $i, $_GET['type'], $_GET['notes']);
 			$stmt->execute();
 			$stmt->close();
-			echo 'Success';
 		}
-	}*/
-	$query = "INSERT into 'calender' (week_num, day_num, type, notes) VALUES (?,?,?,?)";
-	$stmt = $mysqli->prepare($query);
-	echo $mysqli->error;
-	$stmt->bind_param('iiss', 1, 1, 'School', '');
-	$stmt->execute();
-	$stmt->close();
+	}
 	echo 'Success';
+	/*
+	$query = "INSERT into 'calender' (week_num, day_num, type, notes) VALUES(1, 1, 'School', 'hmm')";
+	$stmt = $mysqli-prepare($query);
+	echo $mysqli->error;
+	$stmt->execute();
+	$stmt-close();
+	echo 'Success';*/
 }
 else {
 ?>
@@ -54,5 +46,4 @@ else {
 
 <?
 }
-
 ?>

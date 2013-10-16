@@ -61,12 +61,12 @@ function txt2array($input){	//Converts each new line into an individual array
 	return $output;
 }
 
-function get_date($start_date, $end_date){
+function get_date($start_date, $s_interval){
 	$interval = DateInterval::createFromDateString('1 day');
-	$period = new DatePeriod($start_date, $interval, $end_date);
-
-	foreach ( $period as $dt ){
-	
+	//$period = new DatePeriod($start_date, $interval, $end_date);
+	$end_date = DateTime::createFromFormat('Y-m-d', $start_date);
+	for($i = 0; $i < $s_interval; $i++){
+		$end_date->add($interval);			
 	}
-	return $dt->format( "l Y-m-d H:i:s\n" );
+	return $end_date;
 }
