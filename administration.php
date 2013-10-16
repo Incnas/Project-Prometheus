@@ -183,5 +183,7 @@ $(function(){
 		var path = '/ajax/new_calender.php';
 		$('div.new_calender').load(path).dialog('open');
 	})
+	 $(":submit").css("background-color","red");
 })
+
 </script>
