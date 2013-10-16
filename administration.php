@@ -8,6 +8,13 @@
 	$stmt->execute();
 	$stmt->store_result();
 	$row=bind_result_array($stmt);
+	
+	$query = "SELECT * FROM `option` WHERE name='session_name'";
+	$stmt2=$mysqli->prepare($query);
+	$stmt2->execute();
+	$stmt2->store_result();
+	$row2=bind_result_array($stmt2);
+	$stmt2->fetch();
 ?>
 
 <h3>Upload Class Lists</h3>
@@ -21,8 +28,17 @@
 <button class="new">Add Week(s)</button>
 <button class="delete">Delete Week</button>
 <form>
-Session Name: <input type="text" name="session_name"><br>
-Start Date: <input type="date" name="start_date"><br>
+Session Name: <input type="text" name="session_name" value="<?=$row2['data']?>"/><br>
+<?
+	$query = "SELECT * FROM `option` WHERE name='session_name'";
+	$stmt2=$mysqli->prepare($query);
+	$stmt2->execute();
+	$stmt2->store_result();
+	$row2=bind_result_array($stmt2);
+	$stmt2->fetch();
+?>
+Start Date: <input type="date" name="start_date" value="<?=$row2['data']?>"><br>
+<button type='submit'>Submit</button>
 </form>
 <div class='datagrid'>
 	<table>

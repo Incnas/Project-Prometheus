@@ -151,7 +151,7 @@ $(function(){
 	$('button.delete').button({
 		icons:{primary:"ui-icon-trash"}
 	}).click(function(){
-		$('div.delete_assessment').dialog('open').attr('id', $(this).attr('id'));626_3
+		$('div.delete_assessment').dialog('open').attr('id', $(this).attr('id'));
 	})
 	$('div.delete_assessment').dialog({
 		autoOpen: false,

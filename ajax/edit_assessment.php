@@ -42,7 +42,7 @@ if($stmt->fetch()){
 		</tr>
 		<tr>
 			<td>Due Type:</td>
-			<td><?select_enum('type','calender', $mysqli)?></td>
+		<td><? select_enum('type','assessment_item', $mysqli) ?></td>
 		</tr>
 	</table>
 	</form>

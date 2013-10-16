@@ -15,12 +15,13 @@ if(isset($_GET['name'])){
 	//Add new Address
 	foreach($_GET['num_weeks'] as $counter){
 		for($i = 0; $i <=5; $i++){
-			$query = "INSERT into `calender` (name, start_date, end_date, school_week) VALUES (?,?,?,?)";
+			$query = "INSERT into `calender` (week_num, day_num, date, type, notes) VALUES (?,?,?,?,?)";
 			$stmt = $mysqli->prepare($query);
 			echo $mysqli->error;
-			$stmt->bind_param('ssss', $_GET['name'], $_GET['start_date'], $_GET['end_date'], $_GET['school_week']);
+			$stmt->bind_param('sssss', 1, $i, 2013-10-16, 'School', 'none');
 			$stmt->execute();
 			$stmt->close();
+			echo $mysqli->error;
 			echo 'Success';
 		}
 	}
@@ -35,7 +36,7 @@ else {
 		</tr>
 		<tr>
 			<td>Type</td>
-			<td><?select_enum('type','calender', $mysqli)?></td>
+			<td><?$type=select_enum('type','calender', $mysqli)?></td>
 		</tr>
 		<tr>
 			<td>Notes:</td>

@@ -33,7 +33,7 @@
 	<a href='/edit_info.php?unit_code=<?=$row["unit_code"]?>'>Edit</a>
 <? } ?>
 
-<!--Implement Unit Outline Generator--><a href="bad">View Unit Outline</a> 
+<!--Implement Unit Outline Generator--><a href="unit_outline.php?id=<?=$row['unit_code']?>">View Unit Outline</a> 
 <p><b>Assessments: </b></p>
 <div class='datagrid'>
 	<table>
@@ -52,13 +52,25 @@
 			<tr>
 			<td><?=$row2['name']; ?> </td>
 			<td><?=$row2['weighting']; ?></td>
-			<td><?=$row2['out_date']; ?></td>
-			<td><?=$row2['due_date']; ?></td>
-			</tr>
-		<?
-			}
-			$stmt2->close();
-		?>
+			<? if ($row2['type']=='Test Week'){ ?>
+				<td>Test Week</td>
+				<td>Test Week</td>	
+			<? }
+				elseif ($row2['type']=='Ongoing'){
+			?>
+				<td>Ongoing</td>
+				<td>Ongoing</td>
+			<? }
+				elseif ($row2['type']=='Date'){
+			?>
+				<td><?=$row2['out_date'];?></td>
+				<td><?=$row2['due_date'];?></td>
+			<? } ?>
+				</tr>
+			<?
+				}
+				$stmt2->close();
+			?>
 	</table>
 </div>
 <a href='details.php?unit_code=<?=$row["unit_code"]?>'>Details</a>
