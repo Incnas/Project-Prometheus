@@ -17,7 +17,7 @@ if(isset($_POST['username'])){
 				$_SESSION['user']['name']=$result['username'];
 				$_SESSION['user']['role']=$_POST['role'];
 				$_SESSION['user']['id']=$result['id'];
-				if($result['role']=='admin') $_SESSION['user']['isadmin']=true;
+				if($_POST['role']=='admin') $_SESSION['user']['isadmin']=true;
 				echo 1;
 				exit;
 			}
@@ -28,7 +28,6 @@ if(isset($_POST['username'])){
 }
 
 echo 0;
-
 
   /*      
             if(isset($message)){
