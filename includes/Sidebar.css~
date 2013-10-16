@@ -1,0 +1,11 @@
+
+body {
+#side-bar {
+	float: right;
+}
+#main-content {
+	margin: 0;
+	margin-right: 200px;
+}
+}
+

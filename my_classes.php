@@ -9,7 +9,7 @@
 		$query = "SELECT * FROM class JOIN teacher ON class.teacher_code = teacher.username JOIN unit ON class.unit_code = unit.unit_code WHERE username = '{$_SESSION['user']['name']}'";
 	}
 	else{
-		$query= "";
+		$query= "SELECT 0";
 	}
 	$stmt=$mysqli->prepare($query);
 	$stmt->execute();
