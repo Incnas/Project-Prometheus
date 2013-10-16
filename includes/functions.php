@@ -61,7 +61,7 @@ function txt2array($input){	//Converts each new line into an individual array
 	return $output;
 }
 
-function getDate($start_date, $end_date){
+function get_date($start_date, $end_date){
 	$interval = DateInterval::createFromDateString('1 day');
 	$period = new DatePeriod($start_date, $interval, $end_date);
 
