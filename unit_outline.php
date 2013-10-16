@@ -23,12 +23,12 @@ $query="SELECT
 	unit.std_units,
 	class_code,
 	unit.unit_code,
-	CONCAT(user.fname, ' ', user.lname) as teacher_name,
+	CONCAT(teacher.fname, ' ', teacher.lname) as teacher_name,
 	goals,
 	content 
-FROM class JOIN `unit` on class.unit_code = unit.unit_code JOIN user on class.teacher_code = user.username where class.class_code=? LIMIT 1";
+FROM class JOIN `unit` on class.unit_code = unit.unit_code JOIN teacher on class.teacher_code = teacher.username where unit.unit_code=? LIMIT 1";
 $stmt=$mysqli->prepare($query);
-$class='626_3';
+$class='20999';
 $stmt->bind_param('s', $class);
 $stmt->execute();
 $data=bind_result_array($stmt);
