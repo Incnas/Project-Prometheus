@@ -41,7 +41,7 @@ function td ($data, $class = NULL) //Generates a td element with optional class
 	
 }
 
-function select_enum($col_name, $tbl_name, $mysqli)
+function select_enum($col_name, $tbl_name, $mysqli) //Selects Enum data list from sql and creates dropdown box
 { 
 	echo "<select name=\"$col_name\">"; 
 	$stmt=$mysqli->prepare("SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$tbl_name' AND COLUMN_NAME = '$col_name'");
@@ -53,10 +53,20 @@ function select_enum($col_name, $tbl_name, $mysqli)
 	echo "</select>";
 }
 
-function txt2array($input){
+function txt2array($input){	//Converts each new line into an individual array
 	$tmp = preg_split('/$\R?^/m', $input);
 	foreach($tmp as $item){
 		$output[]=array('text'=> trim($item));
 	}
 	return $output;
+}
+
+function getDate($start_date, $end_date){
+	$interval = DateInterval::createFromDateString('1 day');
+	$period = new DatePeriod($start_date, $interval, $end_date);
+
+	foreach ( $period as $dt ){
+	
+	}
+	return $dt->format( "l Y-m-d H:i:s\n" );
 }

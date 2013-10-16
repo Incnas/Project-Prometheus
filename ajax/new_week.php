@@ -13,7 +13,7 @@ if(isset($_GET['name'])){
 		$last_date=$row['date'];
 	}
 	//Add new Address
-	foreach($_GET['num_weeks'] as $counter){
+	/*foreach($_GET['num_weeks'] as $counter){
 		for($i = 0; $i <=5; $i++){
 			$query = "INSERT into `calender` (week_num, day_num, date, type, notes) VALUES (?,?,?,?,?)";
 			$stmt = $mysqli->prepare($query);
@@ -21,10 +21,16 @@ if(isset($_GET['name'])){
 			$stmt->bind_param('sssss', 1, $i, 2013-10-16, 'School', 'none');
 			$stmt->execute();
 			$stmt->close();
-			echo $mysqli->error;
 			echo 'Success';
 		}
-	}
+	}*/
+	$query = "INSERT into 'calender' (week_num, day_num, type, notes) VALUES (?,?,?,?)";
+	$stmt = $mysqli->prepare($query);
+	echo $mysqli->error;
+	$stmt->bind_param('iiss', 1, 1, 'School', '');
+	$stmt->execute();
+	$stmt->close();
+	echo 'Success';
 }
 else {
 ?>

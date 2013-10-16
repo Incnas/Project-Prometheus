@@ -9,8 +9,8 @@
 	$stmt->store_result();
 	$row=bind_result_array($stmt);
 	
-	$query = "SELECT * FROM `option` WHERE name='session_name'";
-	$stmt2=$mysqli->prepare($query);
+	$query2 = "SELECT * FROM `option` WHERE name='session_name'";
+	$stmt2=$mysqli->prepare($query2);
 	$stmt2->execute();
 	$stmt2->store_result();
 	$row2=bind_result_array($stmt2);
@@ -30,6 +30,7 @@
 <form>
 Session Name: <input type="text" name="session_name" value="<?=$row2['data']?>"/><br>
 <?
+	$stmt2->close();
 	$query = "SELECT * FROM `option` WHERE name='session_name'";
 	$stmt2=$mysqli->prepare($query);
 	$stmt2->execute();
