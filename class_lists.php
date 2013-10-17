@@ -2,14 +2,42 @@
 //Root index.php
 include($_SERVER['DOCUMENT_ROOT'].'/includes/header.inc.php');
 
-$query = "SELECT * FROM class JOIN teacher ON class.teacher_code = teacher.username JOIN unit ON class.unit_code = unit.unit_code";
+$query = "SELECT * FROM class JOIN teacher ON class.teacher_code = teacher.username JOIN unit ON class.unit_code = unit.unit_code ORDER BY `class_code`";
 $stmt=$mysqli->prepare($query);	
 $stmt->execute();
 $stmt->store_result();
 $row=bind_result_array($stmt);
 ?>
 <h3>LIST OF ALL CLASSES</h3>
+<div class="datagrid">
+	<table>
+		<thead>
+			<tr>
+				<th>Class Code</th>
+				<th>Class Name</th>
+				<th>Line</th>
+				<th>Teacher</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?
+			while($stmt->fetch()){
+			?>
+			<tr>
+				<td><?=$row['class_code']?></td>
+				<td><?=$row['name']?></td>
+				<td><?=$row['line']?></td>
+				<td><?=$row['fname'].' '.$row['lname']?></td>
+			</tr>
+			<?	
+			}
+			?>
+		</tbody>
+	</table>
+</div>
+
 <?
+/*
 while($stmt->fetch()){
 	$query = "SELECT * FROM assessment_item WHERE unit_code=?";
 	$stmt2 = $mysqli->prepare($query);
@@ -19,7 +47,7 @@ while($stmt->fetch()){
 ?>
 <h4><?=$row['name'].' - Line: '.$row['line']; ?></h4>
 <p><b>Teacher:</b> <?=$row['fname'].' '.$row['lname']; ?></p>
-<p><b>Assessments: </b></p>
+<!-- <p><b>Assessments: </b></p>
 <div class='datagrid'>
 <table>
 <thead>
@@ -56,7 +84,7 @@ while($stmt->fetch()){
 	$stmt2->close();
 ?>
 </table>
-</div>
+</div> -->
 <?
 }
 $stmt->close();
