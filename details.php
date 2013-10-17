@@ -25,14 +25,14 @@ $row2=bind_result_array($stmt2);
 <?
 $stmt2->data_seek(0);
 while($stmt2->fetch()){
-	echo $row2['line'];
+	echo $row2['line'].', ';
 }
 ?>
 <h4>Teacher(s): </h4>
 <?
 $stmt2->data_seek(0);
 while($stmt2->fetch()){
-	echo $row2['fname'].' '.$row2['lname'].' ('.$row2['class_code'].')';
+	echo $row2['fname'].' '.$row2['lname'].' ('.$row2['class_code'].')'.', ';
 }
 ?>
 

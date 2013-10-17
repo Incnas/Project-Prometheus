@@ -4,13 +4,19 @@
 include($_SERVER['DOCUMENT_ROOT'].'/includes/login.inc.php');
 if(isset($_GET['num_weeks'])){
 	//Add new Address
-	$query = "SELECT * FROM `calender` ORDER BY week_num DESC LIMIT 1";
+	$query2 = "SELECT * FROM `calender` ORDER BY week_num DESC LIMIT 1";
+	$stmt2=$mysqli->prepare($query2);
+	$stmt2->execute();
+	$stmt2->store_result();
+	$row=bind_result_array($stmt2);
+	$stmt2->fetch();
+	
 	for($counter = 1; $counter <= $_GET['num_weeks']; $counter++){
 		for($i = 0; $i <=5; $i++){
 			$query = "INSERT INTO `calender` (`id`, `week_num`, `day_num`, `type`, `notes`) VALUES (NULL, ?, ?, ?, ?)";
 			$stmt = $mysqli->prepare($query);
 			echo $mysqli->error;
-			$stmt->bind_param('iiss', $a=$row['week_num']+$counter, $i, $_GET['type'], $_GET['notes']);
+			$stmt->bind_param('iiss', $a=($row['week_num']+$counter), $i, $_GET['type'], $_GET['notes']);
 			$stmt->execute();
 			$stmt->close();
 		}

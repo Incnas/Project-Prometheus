@@ -38,24 +38,7 @@
 <button class="new">Add Week(s)</button>
 
 <!--Update Calender-->
-<button class="update_calender">
-Update Calender<?
-
-$query4 = "SELECT * FROM calender WHERE day_num=0";
-$stmt4=$mysqli->prepare($query4);
-$stmt4->execute();
-$stmt4->store_result();
-$row4=bind_result_array($stmt4);
-while($stmt4->fetch()){
-	if($row4['type']=='Holiday'){
-		$query5 = "UPDATE calender set type='Holiday', week_num=0 WHERE week_num=?";
-		$stmt5=$mysqli->prepare($query5);
-		$stmt5->bind_param('i', $row['week_num']);
-		$stmt5->execute();
-		$stmt5->close();
-	}
-}
-?></button>
+<button class="update_calender">Update Calender<?update_calender($mysqli)?></button>
 <div class='datagrid'>
 	<table>
 		<thead>
@@ -75,18 +58,19 @@ while($stmt4->fetch()){
 		{
 	?>			
 			<td><!--<button class="day">Week <?=$row['week_num'];?></button>-->
-			<button class="date">
+			<button class="date" id="<?=$row['id']?>"/>
 			<?if($row['day_num']!=0) {
 				//echo $row['day_num'].' ';
 				echo get_date($row3['data'], ($row['week_num']-1)*7+$row['day_num']-1)->format('d/M');
 			}
 			elseif($row['type']!='Holiday'){
-				echo 'Week: '.$row['week_num'].' ';
+				echo 'Week: '.get_school_week($row['week_num'], $mysqli).' ';
 			}
 			if($row['type']!='School'){
 				?></br><?
 				echo $row['type'];
-			}?>
+			}	?></br><?
+			echo $row['notes'];?>
 			</button>
 			</td>
 	<?
@@ -250,8 +234,8 @@ $(function(){
 		draggable: false,
 		title: "Edit date",
 		buttons: {
-			"Edit Date": function() {
-				//Update assessment
+			"Update": function() {
+				//Update date
 				var qstring=$(this).find('form').serialize();
 				$(this).dialog({buttons: {"Loading....":function(){}}});
 				$(this).load('/ajax/edit_date.php?'+qstring,'',function(){
