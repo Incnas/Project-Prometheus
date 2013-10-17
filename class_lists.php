@@ -36,10 +36,20 @@ while($stmt->fetch()){
 	<tr>
 	<td><?=$row2['name']; ?> </td>
 	<td><?=$row2['weighting']; ?></td>
-	<? if($_SESSION['user']['name']=='student'){ ?>
-		<td><?=$row2['out_date']; ?></td>
-		<td><?=$row2['due_date']; ?></td>
-	<? } ?>
+	<? if ($row['type']=='Test Week'){ ?>
+			<td>Test Week</td>
+			<td>Test Week</td>	
+		<? }
+			elseif ($row['type']=='Ongoing'){
+		?>
+			<td>Ongoing</td>
+			<td>Ongoing</td>
+		<? }
+			elseif ($row['type']=='Date'){
+		?>
+			<td><?=$row['out_date'];?></td>
+			<td><?=$row['due_date'];?></td>
+		<? } ?>
 	</tr>
 <?
 	}

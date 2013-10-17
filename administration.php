@@ -30,23 +30,32 @@
 <h3>Upload Teacher Classes</h3>
 <h3>Upload Calender</h3>
 <h4>Edit Calender</h4>
+<h4><?=$row2['data']?></h4>
+<h4><?=$row3['data']?></h4>
+
+<button class="edit_session">Edit Session</button>
 <button class="clear">Clear Calender</button>
 <button class="new">Add Week(s)</button>
-<button class="delete">Delete Week</button>
-<form>
-Session Name: <input type="text" name="session_name" value="<?=$row2['data']?>"/><br>
-<?
-	$stmt2->close();
-	$query = "SELECT * FROM `option` WHERE name='session_name'";
-	$stmt2=$mysqli->prepare($query);
-	$stmt2->execute();
-	$stmt2->store_result();
-	$row2=bind_result_array($stmt2);
-	$stmt2->fetch();
-?>
-Start Date: <input type="date" name="start_date" value="<?=$row3['data']?>"><br>
-<button type='submit'>Submit</button>
-</form>
+
+<!--Update Calender-->
+<button class="update_calender">
+Update Calender<?
+
+$query4 = "SELECT * FROM calender WHERE day_num=0";
+$stmt4=$mysqli->prepare($query4);
+$stmt4->execute();
+$stmt4->store_result();
+$row4=bind_result_array($stmt4);
+while($stmt4->fetch()){
+	if($row4['type']=='Holiday'){
+		$query5 = "UPDATE calender set type='Holiday', week_num=0 WHERE week_num=?";
+		$stmt5=$mysqli->prepare($query5);
+		$stmt5->bind_param('i', $row['week_num']);
+		$stmt5->execute();
+		$stmt5->close();
+	}
+}
+?></button>
 <div class='datagrid'>
 	<table>
 		<thead>
@@ -66,16 +75,19 @@ Start Date: <input type="date" name="start_date" value="<?=$row3['data']?>"><br>
 		{
 	?>			
 			<td><!--<button class="day">Week <?=$row['week_num'];?></button>-->
+			<button class="date">
 			<?if($row['day_num']!=0) {
 				//echo $row['day_num'].' ';
-				echo get_date($row3['data'], ($row['week_num']-1)*5+$row['day_num'])->format('d/M');
+				echo get_date($row3['data'], ($row['week_num']-1)*7+$row['day_num']-1)->format('d/M');
 			}
-			else{
+			elseif($row['type']!='Holiday'){
 				echo 'Week: '.$row['week_num'].' ';
 			}
-			
-			if($row['type']!='School')
-				echo $row['type'];?>
+			if($row['type']!='School'){
+				?></br><?
+				echo $row['type'];
+			}?>
+			</button>
 			</td>
 	<?
 			if($row['day_num']==5){
@@ -83,7 +95,7 @@ Start Date: <input type="date" name="start_date" value="<?=$row3['data']?>"><br>
 			}
 		}
 	?>
-
+		
 	</tr>
 	</tbody>
 	</table>
@@ -92,9 +104,11 @@ Start Date: <input type="date" name="start_date" value="<?=$row3['data']?>"><br>
 <?
 	include($_SERVER['DOCUMENT_ROOT'].'/includes/footer.inc.php');
 ?>
+<div class="edit_session"></div>
 <div class="new_week"></div>
 <div class="clear_calender">Are you sure? This move is irreversable.</div>
 <div class="delete_week">Are you sure?</div>
+<div class="edit_date"></div>
 <script>
 $(function(){
 //Clear Calender Button	
@@ -139,7 +153,7 @@ $(function(){
 		title: "Delete Week(s)?",
 		buttons: {
 			"Delete": function(){
-				var path = "/ajax/delete_week.php?id="+$(this).attr('id');
+				var path = "/ajax/delete_week.php";
 				$.get(path, function(){
 					location.href = location.href;
 				})
@@ -183,7 +197,71 @@ $(function(){
 		var path = '/ajax/new_calender.php';
 		$('div.new_calender').load(path).dialog('open');
 	})
-	 $(":submit").;
+//Edit Session Info
+	$('button.edit_session').button({
+		icons:{primary: "ui-icon-pencil"}
+	}).click(function(){
+		var path = '/ajax/edit_session.php';
+		$('div.edit_session').
+		load(path).
+		dialog('open');
+	});
+	$('div.edit_session').dialog({
+		autoOpen: false,
+		height: 350,
+		width: 400,
+		modal: true,
+		resizable: false,
+		draggable: false,
+		title: "Edit Session",
+		buttons: {
+			"Update Session": function() {
+				//Update assessment
+				var qstring=$(this).find('form').serialize();
+				$(this).dialog({buttons: {"Loading....":function(){}}});
+				$(this).load('/ajax/edit_session.php?'+qstring,'',function(){
+					location.href = location.href;
+				});
+			}
+		}
+	});
+//Refresh Calender
+	$('button.update_calender').button({
+		icons:{primary: "ui-icon-arrowreturnthick-1-e"}
+	}).click(function(){
+		
+	});
+
+//Edit Date
+	$('button.date').button({
+		icons:{primary: "ui-icon-pencil"}
+	}).click(function(){
+		var path = '/ajax/edit_date.php?id='+$(this).attr('id');
+		$('div.edit_date').
+		load(path).
+		dialog('open');
+	});
+	$('div.edit_date').dialog({
+		autoOpen: false,
+		height: 350,
+		width: 400,
+		modal: true,
+		resizable: false,
+		draggable: false,
+		title: "Edit date",
+		buttons: {
+			"Edit Date": function() {
+				//Update assessment
+				var qstring=$(this).find('form').serialize();
+				$(this).dialog({buttons: {"Loading....":function(){}}});
+				$(this).load('/ajax/edit_date.php?'+qstring,'',function(){
+					location.href = location.href;
+				});
+			}
+		}
+	});
+	
+//	 $(":submit").;
 })
 
 </script>
