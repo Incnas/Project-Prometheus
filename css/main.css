@@ -6,7 +6,7 @@ body {
 	margin:0;
 	padding:0;
 	color:#000;
-	background: #eeeeee;
+	background: white;
 }
 
 /* ~~ Element/tag selectors ~~ */
@@ -41,7 +41,7 @@ a img {
 	background-color:#284c8f;
 	color:#fff;
 	font-family:Georgia,"Times New Roman",Times,serif;
-	min-height: 80px;
+	min-height: 0px;
 	margin-bottom: 0;
 	border-bottom: solid #284c8f 6px;
 }
@@ -52,35 +52,7 @@ a img {
 }
 
 .header img {max-height:200px; width: 100%; vertical-align:bottom;}
-.header h2 {margin-bottom: 0;}
-
-
-#menu {
-	list-style: none;
-	background: #284c8f;
-}
-
-#menu li {
-	display: inline-block;
-	padding: 5px;
-	background: #284c8f;
-	margin: 0;
-}
-
-#menu li a, #menu li a:visited  {
-	text-decoration: none;
-	color: #fff;
-}
-
-#menu li:hover {
-	background: #4072cd;
-}
-
-
-#content {
-	padding:10px 0;
-	min-height: 400px;
-}
+.header h1 {margin-bottom: 0;}
 
 /* ~~ This grouped selector gives the lists in the .content area space ~~ */
 .content ul,.content ol {

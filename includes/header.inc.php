@@ -19,26 +19,34 @@ include('login.inc.php');
 
 <link href="/css/redmond/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css" />
 <link href="/css/main.css" rel="stylesheet" type="text/css" />
+<link href="/css/cssmenu.css" rel="stylesheet" type="text/css" />
+<link href="/css/header.css" rel="stylesheet" type="text/css" />
 <? if(isset($headparams)){echo $headparams;} ?>
 </head>
 <body>
-<div class="container">
 <div class="header">
-<h1>Welcome to NOAH</h1>
-<!--<img src="/images/header.png" />-->
+	<div id="title"><h1>Welcome to NOAH</h1></div>
+	<!--<img src="/images/header.png" />-->
+	<div id="user_title">Logged in as: <? echo $_SESSION['user']['name']; ?> <button class='logout'>Logout</button></div>
 </div>
-<div class="title">
-	Logged in as: <? echo $_SESSION['user']['name']; ?>
-	<a href="/logout.php">Logout</a>
-</div>
-<div class="menu">
-	<ul id="menu">
+<div class="container">
+<div id="cssmenu">
+	<ul>
 		<li><a href="/index.php">Home</a></li>
 		<li><a href="/my_classes.php">My Classes</a></li>
 		<li><a href="/class_lists.php">All Classes</a></li>
 		<li><a href="/prophet.php">Prophet</a></li>
 		<li><a href="/user.php">Settings</a></li>
-		<li><a href="/CustomerService.php">Customer Service</a></li>
 		<? if($_SESSION['user']['role']=='admin') echo '<li><a href="/administration.php">Administration</a></li>'; ?>	
 	</ul>
 </div>
+
+<script>
+$(function(){
+	$('button.logout').button({
+		//icons:{primary: "ui-icon-closethick"}
+	}).click(function(){
+		
+	});
+})
+</script>
