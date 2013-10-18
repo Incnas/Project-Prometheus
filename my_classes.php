@@ -1,7 +1,6 @@
 <?
 	//Root index.php
 	include($_SERVER['DOCUMENT_ROOT'].'/includes/header.inc.php');
-	include($_SERVER['DOCUMENT_ROOT'].'/includes/sidebar.inc.php');
 	if($_SESSION['user']['role']=='student'){
 		$query = "SELECT * FROM class JOIN student_class ON class.class_code = student_class.class_code JOIN student ON student_class.student_code = student.student_code JOIN unit ON class.unit_code = unit.unit_code JOIN teacher ON class.teacher_code = teacher.username WHERE student.username = ".$_SESSION['user']['name'];
 	}
