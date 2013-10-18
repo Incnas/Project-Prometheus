@@ -29,6 +29,7 @@ include('login.inc.php');
 	<!--<img src="/images/header.png" />-->
 	<div id="user_title">Logged in as: <? echo $_SESSION['user']['name']; ?> <button class='logout'>Logout</button></div>
 </div>
+<?include($_SERVER['DOCUMENT_ROOT'].'/includes/sidebar.inc.php');?>
 <div class="container">
 <div id="cssmenu">
 	<ul>
@@ -46,7 +47,7 @@ $(function(){
 	$('button.logout').button({
 		//icons:{primary: "ui-icon-closethick"}
 	}).click(function(){
-		
+		window.location.href='logout.php';
 	});
 })
 </script>

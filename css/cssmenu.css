@@ -10,6 +10,7 @@
   border: 0;
   line-height: 1;
   font-family: 'Lato', sans-serif;
+    
 }
 #cssmenu {
   border: 1px solid #09275b;
@@ -19,6 +20,7 @@
   -o-border-radius: 5px;
   border-radius: 5px;
   width: auto;
+  height: 43px;
 }
 #cssmenu ul {
   zoom: 1;
@@ -36,6 +38,7 @@
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
+  height: 40px;
 }
 #cssmenu ul:before {
   content: '';

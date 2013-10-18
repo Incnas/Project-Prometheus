@@ -1,15 +1,23 @@
 <head>
 <link rel="stylesheet" type="text/css" href="/css/Sidebar.css">
 </head>
-<? 
-//Main header page for website.
 
-//Start page load time counter
-?>
 <div class="sidebar">
-<p>TODO: Create Side-Bar</p>
-<p>Sidebar should contain:</p>
-<h4>Registered Classes</h4>
-<h4>Upcoming Assessment</h4>
-<h4>Upcoming School Events</h4>
+<? 
+if($_SESSION['user']['role']=='student'){
+	if(curPageName()=='my_classes.php' || curPageName()=='index.php'){
+?>
+	<div id="upcoming_assessment">
+	<h4>Upcoming Assessment</h4>
+	<p>Pull any assessment out/due in the next two weeks</p>
+	</div>
+
+	<div id="upcoming_events">
+	<h4>Upcoming School Events</h4>
+	<p>To be implemented once the news page has been created</p>
+	</div>
+<?
+	}
+}
+?>
 </div>

@@ -115,11 +115,14 @@ function update_calender($mysqli){
 			$stmt2=$mysqli->prepare($query);
 			$stmt2->execute();
 			$stmt2->close();
-			$stmt->data_seek(0);
+			//$stmt->data_seek(0);
 		}
 		$week_num = $row['week_num'];
 	}
 }
 
+function curPageName() {
+	return substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
+}
 
 

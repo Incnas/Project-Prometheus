@@ -28,13 +28,13 @@ while($stmt2->fetch()){
 	echo $row2['line'].', ';
 }
 ?>
-<h4>Teacher(s): </h4>
+<h4>Teacher(s): </h4><p>
 <?
 $stmt2->data_seek(0);
 while($stmt2->fetch()){
 	echo $row2['fname'].' '.$row2['lname'].' ('.$row2['class_code'].')'.', ';
 }
-?>
+?></p>
 
 <h4>Unit Goals:</h4>
 <?

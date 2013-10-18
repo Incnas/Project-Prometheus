@@ -17,38 +17,54 @@ $stmt2->bind_param('s',$row['unit_code']);
 $stmt2->execute();
 $stmt2->store_result();
 $row2=bind_result_array($stmt2);
+
+$query = "SELECT * FROM `option` WHERE name='session_name'";
+$stmt_option=$mysqli->prepare($query);
+$stmt_option->execute();
+$stmt_option->store_result();
+$row_option=bind_result_array($stmt_option);
+$stmt_option->fetch();
 ?>
 <div class='section'>
-<h4>Course Name: <?=$row['name']?></h4>
-<h4>Unit Code: <?=$_GET['unit_code']?></h4>
-<h4>Line(s): </h4>
-<?
-$stmt2->data_seek(0);
-while($stmt2->fetch()){
-	echo $row2['line'];
-}
-?>
-<h4>Teacher(s): </h4>
-<?
-$stmt2->data_seek(0);
-while($stmt2->fetch()){
-	echo $row2['fname'].' '.$row2['lname'].' ('.$row2['class_code'].')';
-}
-?>
-
-<h4>Unit Goals:</h4>
-<p>Note: Each New Line Is An Individual Entry</p>
+<h2 class='title'><?=$row['name']?></h2>
+<table id='info'>
+	<tr><td><h4>Unit Code: </h4><?=$_GET['unit_code']?></td><td><h4>Session: </h4><?=$row_option['data']?></td></tr>
+	<tr><td><h4>Line(s): </h4>
+		<?
+		$stmt2->data_seek(0);
+		while($stmt2->fetch()){
+			echo $row2['line'];
+		}
+		?>
+	</td><td><h4>Year: </h4><?=date("Y"); ?></td></tr>
+	<tr><td><h4>Teacher(s): </h4>
+		<?
+		$stmt2->data_seek(0);
+		while($stmt2->fetch()){
+			echo $row2['fname'].' '.$row2['lname'].' ('.$row2['class_code'].')';
+		}
+		?>
+	</td><td><h4><?=$row['std_units']?> Standard Units</h4></td></tr>
+</table>
+<hr>
+<div class='title'>
+	<h4>Unit Goals:</h4>
+	<p id='note'>Note: Each New Line Is An Individual Entry</p>
+</div>
 <textarea>
-Test Text Area. NOTE:THE SIZE IS CHANGABLE. NEEDS FIX
+<?=$row['goals']?>
 </textarea>
 
-<h4>Content:</h4>
-<p>Note: Each New Line Is An Individual Entry</p>
+<hr>
+<div class='title'>
+	<h4>Content:</h4>
+	<p id='note'>Note: Each New Line Is An Individual Entry</p>
+</div>
 <textarea>
-Test Text Area. NOTE:THE SIZE IS CHANGABLE. NEEDS FIX
+<?=$row['content']?>
 </textarea>
 
-<h4>Assessment Items:</h4><button class="new" id="<?=$row['unit_code']?>">Add Assessment</button>
+<div class='title'><h4>Assessment Items:</h4><button class="new" id="<?=$row['unit_code']?>">Add Assessment</button></div>
 <div class='datagrid'>
 <table>
 <thead>
@@ -76,7 +92,7 @@ $row=bind_result_array($stmt);
 
 <tbody>
 	<? while($stmt->fetch()){ ?>
-	<tr>
+	<tr class='edit_row' id="<?=$row['id'] ?>">
 		<td><?=$row['name'];?></td>
 		<td><?=$row['weighting'];?></td>
 		<? if ($row['type']=='Test Week'){ ?>
@@ -102,11 +118,8 @@ $row=bind_result_array($stmt);
 </tbody>
 </table>
 </div>
-
-<button type="reset" value="Reset">Reset</button>
-<button type="button">Default</button>
-<input type="submit" formaction="preview_template" value="Preview" />
-<input type="submit" value="Submit" />
+<button class='preview'>Preview</button>
+<button class='submit'>Submit</button>
 
 </div>
 <?
@@ -201,6 +214,45 @@ $(function(){
 			}
 		}
 	})
+//Submit
+	$('button.submit').button({
+		//icons:{primary: "ui-icon-closethick"}
+	}).click(function(){
+		window.location.href='logout.php';
+	});
+//Preview
+	$('button.preview').button({
+		//icons:{primary: "ui-icon-closethick"}
+	}).click(function(){
+		window.location.href='logout.php';
+	});
+	
+//Edit Row
+	$('tr.edit').click(function(){
+		var path = '/ajax/edit_assessment.php?id='+$(this).attr('id');
+		$('div.edit_assessment').
+		load(path).
+		dialog('open');
+	});
+	$('div.edit_assessment').dialog({
+		autoOpen: false,
+		height: 350,
+		width: 400,
+		modal: true,
+		resizable: false,
+		draggable: false,
+		title: "Edit assessment",
+		buttons: {
+			"Update Assessment": function() {
+				//Update assessment
+				var qstring=$(this).find('form').serialize();
+				$(this).dialog({buttons: {"Loading....":function(){}}});
+				$(this).load('/ajax/edit_assessment.php?'+qstring,'',function(){
+					location.href = location.href;
+				});
+			}
+		}
+	});
 
 })
 </script>

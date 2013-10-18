@@ -42,7 +42,6 @@
 				<th>Weighting</th>
 				<th>Out Date</th>
 				<th>Due Date</th>
-				<th>Resources</th>
 			</tr>
 		</thead>
 		<?
