@@ -28,10 +28,7 @@ include('login.inc.php');
 	<div id="title"><h1>Welcome to NOAH</h1></div>
 	<!--<img src="/images/header.png" />-->
 	<div id="user_title">Logged in as: <? echo $_SESSION['user']['name']; ?> <button class='logout'>Logout</button></div>
-</div>
-<?include($_SERVER['DOCUMENT_ROOT'].'/includes/sidebar.inc.php');?>
-<div class="container">
-<div id="cssmenu">
+	<div id="cssmenu">
 	<ul>
 		<li><a href="/index.php">Home</a></li>
 		<li><a href="/my_classes.php">My Classes</a></li>
@@ -41,6 +38,8 @@ include('login.inc.php');
 		<? if($_SESSION['user']['role']=='admin') echo '<li><a href="/administration.php">Administration</a></li>'; ?>	
 	</ul>
 </div>
+</div>
+<div class="container">
 
 <script>
 $(function(){

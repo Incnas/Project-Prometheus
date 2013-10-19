@@ -9,5 +9,5 @@
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@top-color', endColorstr='@bottom-color', GradientType=0);
 }
 #title {width:300px; float:left;}
-#user_title {float:right;}
+#user_title {float:right; margin-top:5px; margin-right:5px;}
 

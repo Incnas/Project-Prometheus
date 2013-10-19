@@ -33,7 +33,7 @@ $stmt_option->fetch();
 		<?
 		$stmt2->data_seek(0);
 		while($stmt2->fetch()){
-			echo $row2['line'];
+			echo $row2['line'].', ';
 		}
 		?>
 	</td><td><h4>Year: </h4><?=date("Y"); ?></td></tr>
@@ -41,7 +41,7 @@ $stmt_option->fetch();
 		<?
 		$stmt2->data_seek(0);
 		while($stmt2->fetch()){
-			echo $row2['fname'].' '.$row2['lname'].' ('.$row2['class_code'].')';
+			echo $row2['fname'].' '.$row2['lname'].' ('.$row2['class_code'].')'.', ';
 		}
 		?>
 	</td><td><h4><?=$row['std_units']?> Standard Units</h4></td></tr>

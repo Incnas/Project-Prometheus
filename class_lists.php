@@ -8,7 +8,7 @@ $stmt->execute();
 $stmt->store_result();
 $row=bind_result_array($stmt);
 ?>
-<h3>LIST OF ALL CLASSES</h3>
+<h3>Insert Search Bar Here</h3>
 <div class="datagrid">
 	<table>
 		<thead>
