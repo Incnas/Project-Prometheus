@@ -14,8 +14,9 @@
 	$stmt->execute();
 	$stmt->store_result();
 	$row=bind_result_array($stmt);
+	
+	include($_SERVER['DOCUMENT_ROOT'].'/includes/sidebar.inc.php');
 ?>
-
 <!--<h2>My Classes</h2>-->
 
 <div id="tabs">

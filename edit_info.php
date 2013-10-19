@@ -218,13 +218,13 @@ $(function(){
 	$('button.submit').button({
 		//icons:{primary: "ui-icon-closethick"}
 	}).click(function(){
-		window.location.href='logout.php';
+		
 	});
 //Preview
 	$('button.preview').button({
 		//icons:{primary: "ui-icon-closethick"}
 	}).click(function(){
-		window.location.href='logout.php';
+//		window.location.href='logout.php';
 	});
 	
 //Edit Row

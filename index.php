@@ -2,6 +2,7 @@
 <?
 	//Root index.php
 	include($_SERVER['DOCUMENT_ROOT'].'/includes/header.inc.php');
+	include($_SERVER['DOCUMENT_ROOT'].'/includes/sidebar.inc.php');
 ?>
 <div id="tabs">
 	<ul>
@@ -22,7 +23,6 @@
 	<div id="timetable">
 		<p>Put Timetable here</p>
 	</div>
-	<?include($_SERVER['DOCUMENT_ROOT'].'/includes/sidebar.inc.php');?>
 </div>
 
 <?
