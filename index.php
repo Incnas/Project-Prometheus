@@ -21,7 +21,7 @@
 		<p>Put Calender here</p>
 	</div>
 	<div id="timetable">
-		<p>Put Timetable here</p>
+		<?include($_SERVER['DOCUMENT_ROOT'].'/timetable.php');?>
 	</div>
 </div>
 

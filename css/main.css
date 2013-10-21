@@ -5,9 +5,9 @@ body {
 	/*font-family: 'Telex', sans-serif;*/
 	margin:0;
 	padding:0;
-	color:#000;
-	background: white;
-	background-image:url('/Images/skin_background.jpg') 
+	background: #0b0f23;
+	background-image:url('/Images/skin_background.jpg');
+	background-repeat:no-repeat;
 }
 
 /* ~~ Element/tag selectors ~~ */
@@ -162,13 +162,15 @@ div.offset {
 	margin-top:100px;
 	float:center;
 	text-align:center;
+	background:white;
 }
+
+.container div{background: white;}
 
 .title {
 	min-height:21px;
 	margin:10px;
 	text-align:center;
-	color:white;
 	border:solid 1px;
 	border-radius:10px;
 	background: #287DDE;
@@ -199,6 +201,7 @@ textarea {width:80%; height: 200px; resize:none; margin-left:49px;}
 
 .tabs_list {height:36px;}
 #course_title {
+	padding:10px 0;
 	margin-bottom:0px;
 	text-align:center;
 	color:white;
@@ -213,7 +216,8 @@ textarea {width:80%; height: 200px; resize:none; margin-left:49px;}
 	background: linear-gradient(top, #287DDE 0%, #284C8F 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@top-color', endColorstr='@bottom-color', GradientType=0);
 }
-#tabs {border:none; min-width:78%; float:left; 	border:1px solid #a6c9e2;}
+
+#tabs {border:none; min-width:78%; float:left; 	border:1px solid #a6c9e2;min-height:80%;}
 
 h2 {
 	margin:0;
@@ -238,3 +242,5 @@ h2 {
 .notebook {}
 
 .node {background:white;}
+
+/*#timetable tr{border-bottom-style:solid; border-color:black}*/

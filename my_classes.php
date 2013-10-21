@@ -22,7 +22,7 @@
 <div id="tabs">
 	<ul class="tabs_list">
 		<? while($stmt->fetch()) { ?>
-			<li><a href="<?='#'.$row['class_code']; ?>"><?=$row['line'].': '.$row['short_name']?></a></li>
+			<li><a href="<?='#'.$row['class_code']; ?>"><?=$row['line'].': '.$row['name']?></a></li>
 		<?}?>
 	</ul>
 <?

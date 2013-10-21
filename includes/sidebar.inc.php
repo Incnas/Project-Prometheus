@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" href="/css/Sidebar.css">
 </head>
 <? 
-if($_SESSION['user']['role']=='student'){
+if($_SESSION['user']['role']=='student' || $_SESSION['user']['role']=='teacher'){
 	if(curPageName()=='index.php' || curPageName()=='my_classes.php'){
 ?>
 	<div class="sidebar">
