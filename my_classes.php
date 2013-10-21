@@ -15,8 +15,14 @@
 	$stmt->store_result();
 	$row=bind_result_array($stmt);
 ?>
-<h1>My Classes</h1>
+<div id="tabs">
+	<ul id="tabs_list">
+		<? while($stmt->fetch()) { ?>
+			<li><a href="<?='#'.$row['class_code']; ?>"><?=$row['line'].': '.$row['name']?></a></li>
+		<?}?>
+	</ul>
 <?
+	$stmt->data_seek(0);
 	while($stmt->fetch()){
 		$query = "SELECT * FROM assessment_item WHERE unit_code=?";
 		$stmt2 = $mysqli->prepare($query);
@@ -24,58 +30,66 @@
 		$stmt2->execute();
 		$row2=bind_result_array($stmt2);
 ?>
-<h4><?=$row['name'].' - Line: '.$row['line']; ?></h4>
-<p><b>Teacher:</b> <?=$row['fname'].' '.$row['lname']; ?></p>
+<div id="<?=$row['class_code']?>">
+	<h4><?=$row['name'].' - Line: '.$row['line']; ?></h4>
+	<p><b>Teacher:</b> <?=$row['fname'].' '.$row['lname']; ?></p>
 
-<!--Should display only if the user is a teacher or admin-->
-<? if($_SESSION['user']['role']=='teacher'){ ?>
-	<a href='/edit_info.php?unit_code=<?=$row["unit_code"]?>'>Edit</a>
-<? } ?>
+	<!--Should display only if the user is a teacher or admin-->
+	<? if($_SESSION['user']['role']=='teacher'){ ?>
+		<a href='/edit_info.php?unit_code=<?=$row["unit_code"]?>'>Edit</a>
+	<? } ?>
 
-<!--Implement Unit Outline Generator--><a href="unit_outline.php?id=<?=$row['unit_code']?>">View Unit Outline</a> 
-<p><b>Assessments: </b></p>
-<div class='datagrid'>
-	<table>
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Weighting</th>
-				<th>Out Date</th>
-				<th>Due Date</th>
-			</tr>
-		</thead>
-		<?
-			while($stmt2->fetch()){
-		?>
-			<tr>
-			<td><?=$row2['name']; ?> </td>
-			<td><?=$row2['weighting']; ?></td>
-			<? if ($row2['type']=='Test Week'){ ?>
-				<td>Test Week</td>
-				<td>Test Week</td>	
-			<? }
-				elseif ($row2['type']=='Ongoing'){
-			?>
-				<td>Ongoing</td>
-				<td>Ongoing</td>
-			<? }
-				elseif ($row2['type']=='Date'){
-			?>
-				<td><?=$row2['out_date'];?></td>
-				<td><?=$row2['due_date'];?></td>
-			<? } ?>
+	<!--Implement Unit Outline Generator--><a href="unit_outline.php?id=<?=$row['unit_code']?>">View Unit Outline</a> 
+	<p><b>Assessments: </b></p>
+	<div class='datagrid'>
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Weighting</th>
+					<th>Out Date</th>
+					<th>Due Date</th>
 				</tr>
+			</thead>
 			<?
-				}
-				$stmt2->close();
+				while($stmt2->fetch()){
 			?>
-	</table>
+				<tr>
+				<td><?=$row2['name']; ?> </td>
+				<td><?=$row2['weighting']; ?></td>
+				<? if ($row2['type']=='Test Week'){ ?>
+					<td>Test Week</td>
+					<td>Test Week</td>	
+				<? }
+					elseif ($row2['type']=='Ongoing'){
+				?>
+					<td>Ongoing</td>
+					<td>Ongoing</td>
+				<? }
+					elseif ($row2['type']=='Date'){
+				?>
+					<td><?=$row2['out_date'];?></td>
+					<td><?=$row2['due_date'];?></td>
+				<? } ?>
+					</tr>
+				<?
+					}
+					$stmt2->close();
+				?>
+		</table>
+	</div>
+	<a href='details.php?unit_code=<?=$row["unit_code"]?>'>Details</a>
 </div>
-<a href='details.php?unit_code=<?=$row["unit_code"]?>'>Details</a>
 <?
 }
 $stmt->close();
 ?>
+</div>
+<script>
+$(function() {
+	$( "#tabs" ).tabs();
+});
+</script>
 <?
 include($_SERVER['DOCUMENT_ROOT'].'/includes/footer.inc.php');
-?>
+?> 	
