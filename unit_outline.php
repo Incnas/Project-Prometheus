@@ -21,6 +21,7 @@ $query="SELECT
 	SUBSTRING(class.session_num, 5,1) as session,
 	SUBSTRING(class.session_num, 1, 4) as year,
 	unit.std_units,
+	unit.level,
 	class_code,
 	unit.unit_code,
 	CONCAT(teacher.fname, ' ', teacher.lname) as teacher_name,
@@ -41,20 +42,24 @@ $stmt->close();
 
 $assessment = array();
 
-/*
+
 $query="SELECT * FROM assessment_item where unit_code=?";
 $stmt=$mysqli->prepare($query);
 $stmt->bind_param('s', $data['unit_code']);
 $stmt->execute();
+$stmt->store_result();
 $tmp = bind_result_array($stmt);
 $assessment = array();
-$stmt->fetch();
+while($stmt->fetch()){
+	$assessment[] = $tmp;
+	print_r($tmp);
+}
 	
-*/
 
 
+print_r($assessment);
 
-//exit();
+exit();
 // -----------------
 // Load the template
 // -----------------
