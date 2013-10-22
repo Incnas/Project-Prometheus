@@ -15,8 +15,9 @@
 	$stmt->store_result();
 	$row=bind_result_array($stmt);
 ?>
-<h2>My Classes</h2>
-<hr>
+
+<!--<h2>My Classes</h2>-->
+
 <div id="tabs">
 	<ul class="tabs_list">
 		<? while($stmt->fetch()) { ?>
@@ -32,20 +33,36 @@
 		$stmt2->execute();
 		$row2=bind_result_array($stmt2);
 ?>
-<div id="<?=$row['class_code']?>">
+<div class="class_tabs" id="<?=$row['class_code']?>">
 	<h3 id="course_title"><?=$row['name'].' - Line: '.$row['line']; ?></h3>
 	<div id="class_tabs">
 	
 		<div id="home">
-			<p><b>Teacher:</b> <?=$row['fname'].' '.$row['lname']; ?></p>
+			<p class="teacher"><b>Teacher:</b> <?=$row['fname'].' '.$row['lname']; ?></p>
 
 			<!--Should display only if the user is a teacher or admin-->
 			<? if($_SESSION['user']['role']=='teacher'){ ?>
-				<a href='/edit_info.php?unit_code=<?=$row["unit_code"]?>'>Edit</a>
+				<a class="extra" href='/edit_info.php?unit_code=<?=$row["unit_code"]?>'>Edit</a>
 			<? } ?>
-
-			<!--Implement Unit Outline Generator--><a href="unit_outline.php?id=<?=$row['unit_code']?>">View Unit Outline</a> 
-			<p><b>Assessments: </b></p>
+			<!--Implement Unit Outline Generator--><a class="extra" href="unit_outline.php?id=<?=$row['unit_code']?>">View Unit Outline</a> 
+			<hr />
+			<h3>Unit Goals</h3>
+			<?
+				$goals=txt2array($row['goals']);
+				foreach($goals as $goal){
+					echo '<li>'.$goal['text'].'</li>';
+				}	
+			?>
+			<hr />
+			<h3>Content</h3>
+			<?
+				$goals=txt2array($row['goals']);
+				foreach($goals as $goal){
+					echo '<li>'.$goal['text'].'</li>';
+				}	
+			?>
+			<hr />
+			<h3>Assessment</h3>
 			<div class='datagrid'>
 				<table>
 					<thead>
@@ -100,7 +117,10 @@ $stmt->close();
 <script>
 $(function() {
 	$( "#tabs" ).tabs();
-});
+})
+	$('a.extra').button({
+		icons:{primary: "ui-icon-pencil"}
+	});
 </script>
 <?
 include($_SERVER['DOCUMENT_ROOT'].'/includes/footer.inc.php');
