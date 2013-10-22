@@ -11,7 +11,48 @@
 		<li><a href="#timetable">Timetable</a></li>
 	</ul>
 	<div id="news">
-		<p>Put school news here</p>
+		<button id="add_story">+ News</button>
+<div class="datagrid">
+		<table>
+			<thead>
+				<tr>
+					<th>News Feed</th>
+				</tr>
+			</thead>
+			<tbody>
+            	<tr>
+					<td>News 1</td>
+				</tr>
+				<tr>
+					<td>News 2</td>
+				</tr>
+				<tr>
+					<td>News 3</td>
+				</tr>
+				<tr>
+					<td>News 4</td>
+				</tr>
+				<tr>
+					<td>News 5</td>
+				</tr>
+				<tr>
+					<td>News 6</td>
+				</tr>
+				<tr>
+					<td>News 7</td>
+				</tr>
+				<tr>
+					<td>News 8</td>
+				</tr>
+				<tr>
+					<td>News 9</td>
+				</tr>
+				<tr>
+					<td>News 10</td>
+				</tr>		
+			</tbody>
+		</table>
+</div>
 	</div>
 	<div id="sporting">
 		<p>Put Sports Notices news here</p>
