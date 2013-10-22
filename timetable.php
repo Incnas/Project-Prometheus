@@ -1,0 +1,82 @@
+<?
+	for($i=1; $i<9; $i++){
+		if($_SESSION['user']['role']=='student'){
+			$query = "SELECT * FROM class JOIN student_class ON class.class_code = student_class.class_code JOIN student ON student_class.student_code = student.student_code JOIN unit ON class.unit_code = unit.unit_code JOIN teacher ON class.teacher_code = teacher.username WHERE student.username = ".$_SESSION['user']['name']." AND class.line = ".$i." ORDER BY line";
+		}
+		elseif($_SESSION['user']['role']=='teacher'){
+			$query = "SELECT * FROM class JOIN teacher ON class.teacher_code = teacher.username JOIN unit ON class.unit_code = unit.unit_code WHERE username = '{$_SESSION['user']['name']}' AND class.line =  '{$i}' ORDER BY line";
+		}
+		else{
+			$query= "SELECT 0";
+		}
+		$stmt=$mysqli->prepare($query);
+		$stmt->execute();
+		$stmt->store_result();
+		$row=bind_result_array($stmt);
+		if($stmt->fetch()){
+			$line[$i]=$row['short_name'];
+		}
+		else{
+			$line[$i]='Free';
+		}
+	}
+?>
+
+<div class='datagrid' id='timetable'>
+	<table>
+		<thead>
+			<tr>
+				<th>Monday</th>
+				<th>Tuesday</th>
+				<th>Wednesday</th>
+				<th>Thursday</th>
+				<th>Friday</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><?=$line['5']?></td>
+				<td><?=$line['6']?></td>
+				<td><?=$line['7']?></td>
+				<td><?=$line['1']?></td>
+				<td><?=$line['4']?></td>
+			</tr>
+			<tr>
+				<td><?=$line['2']?></td>
+				<td><?=$line['4']?></td>
+				<td><?=$line['1']?></td>
+				<td><?=$line['5']?></td>
+				<td><?=$line['3']?></td>
+			</tr>
+			<tr>
+				<td><?=$line['7']?></td>
+				<td><?=$line['5']?></td>
+				<td><?=$line['3']?></td>
+				<td><?=$line['6']?></td>
+				<td><?=$line['1']?></td>
+			</tr>
+			<tr>
+				<td><?=$line['3']?></td>
+				<td><?=$line['7']?></td>
+				<td><?=$line['2']?></td>
+				<td><?=$line['2']?></td>
+				<td><?=$line['6']?></td>
+			</tr>
+			<tr>
+				<td><?=$line['1']?></td>
+				<td><?=$line['2']?></td>
+				<td><?=$line['4']?></td>
+				<td><?=$line['8']?></td>
+				<td><?=$line['5']?></td>
+			</tr>
+			<tr>
+				<td><?=$line['4']?></td>
+				<td><?=$line['3']?></td>
+				<td><?=$line['6']?></td>
+				<td><?=$line['8']?></td>
+				<td><?=$line['7']?></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+

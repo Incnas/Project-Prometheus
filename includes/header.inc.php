@@ -23,6 +23,7 @@ include('login.inc.php');
 <link href="/css/header.css" rel="stylesheet" type="text/css" />
 <? if(isset($headparams)){echo $headparams;} ?>
 </head>
+
 <body>
 <div class="header">
 	<div id="title"><h1>Welcome to NOAH</h1></div>
@@ -49,4 +50,11 @@ $(function(){
 		window.location.href='logout.php';
 	});
 })
+$(document).ready(function(){
+    $('#cssmenu a').each(function(index) {
+        if(this.href.trim() == window.location)
+            $(this).addClass("active");
+    });
+});
 </script>
+

@@ -217,9 +217,7 @@ $(function(){
 	});
 
 //Edit Date
-	$('button.date').button({
-		icons:{primary: "ui-icon-pencil"}
-	}).click(function(){
+	.click(function(){
 		var path = '/ajax/edit_date.php?id='+$(this).attr('id');
 		$('div.edit_date').
 		load(path).
