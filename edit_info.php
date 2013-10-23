@@ -47,11 +47,13 @@ $stmt_option->fetch();
 	</td><td><h4><?=$row['std_units']?> Standard Units</h4></td></tr>
 </table>
 <hr>
+<form id="unit_info">
+<input type="hidden" name="unit_code" value="<?=$row['unit_code']; ?>" />
 <div class='title'>
 	<h4>Unit Goals:</h4>
 	<p id='note'>Note: Each New Line Is An Individual Entry</p>
 </div>
-<textarea>
+<textarea name="goals">
 <?=$row['goals']?>
 </textarea>
 
@@ -60,10 +62,10 @@ $stmt_option->fetch();
 	<h4>Content:</h4>
 	<p id='note'>Note: Each New Line Is An Individual Entry</p>
 </div>
-<textarea>
+<textarea name="content">
 <?=$row['content']?>
 </textarea>
-
+</form>
 <div class='title'><h4>Assessment Items:</h4><button class="new" id="<?=$row['unit_code']?>">Add Assessment</button></div>
 <div class='datagrid'>
 <table>
@@ -216,9 +218,12 @@ $(function(){
 	})
 //Submit
 	$('button.submit').button({
-		//icons:{primary: "ui-icon-closethick"}
+		icons:{primary: "ui-icon-tick"}
 	}).click(function(){
-		
+		var qstring = $('#unit_info').serialize();
+		$.get('/ajax/edit_session.php?'+qstring, function(){
+			location.href = '/my_classes.php';
+		})
 	});
 //Preview
 	$('button.preview').button({
